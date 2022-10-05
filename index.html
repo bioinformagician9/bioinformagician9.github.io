@@ -192,7 +192,7 @@
           <div class="a1E ae a1F af">
             <div class="a7 a1G lg:av/12">
               <div
-                class="wow fadeInUp a2T lg:a1W lg:ad[570px]"
+                class="wow fadeInUp a2T lg:a1W lg:ad[570px] "
                 data-wow-delay=".2s"
               >
                 <span
@@ -275,7 +275,7 @@
               </div>
             </div>
 
-            <div class="a7 a1G lg:a1I/12">
+            <div class="a7 a1G lg:a1I/12 floating">
               <div
                 class="wow fadeInUp ac a2t a1w a7 ad[530px] a36 lg:a1j"
                 data-wow-delay=".3s"
@@ -904,18 +904,19 @@
                       class="a1w a7 a3e"
                       usemap="#img1"
                     />
+                    
                     <map name="img1">
                       <!-- x1=top left X coordinate
                       y1=top left Y coordinate
                       x2=bottom right X coordinate
                       y2=bottom right Y coordinate -->
-                      <area shape="rect" coords="108,421,154,385" href="link" alt="alttext">
+                      <area shape="rect" coords="108,421,154,385" href="#" id="#" alt="alttext">
                     </map>
                   </div>
                 </div>
                 <div class="swiper-slide">
                   <div
-                    class="a1w a7 ad[252px] xs:ad[265px]"
+                    class="a1w a7 ad[252px] xs:ad[265px] child"
                   >
                     <img
                       src="images/screens/screen-6.jpeg"
@@ -927,7 +928,7 @@
                 </div>
                 <div class="swiper-slide">
                   <div
-                    class="a1w a7 ad[252px] xs:ad[265px]"
+                    class="a1w a7 ad[252px] xs:ad[265px] child"
                   >
                     <img
                       src="images/screens/screen-7.jpeg"
@@ -1067,7 +1068,7 @@
                   <img
                     src="images/cta/cta1.png"
                     alt="cta image"
-                    class="a1w lg:a1L/2"
+                    class="a1w lg:a1K/12"
                   />
                   <div
                     class="a3 a3E a5 a2z a2y a38 a7 a2j a3w"
@@ -1104,7 +1105,7 @@
                   </div>
                   <div class="a3 a5 a2x a2y">
                     <svg
-                      width="44"
+                      width="54"
                       height="30"
                       viewBox="0 0 54 30"
                       fill="none"
@@ -1619,6 +1620,11 @@
 
       //activate accordion function
       initAcc(".faqs", true);
+
+      jQuery("#clickMe").on('click',function(){
+      var vi = jQuery("#iframe");
+      vi.attr("src", vi.data("autoplay-src") );
+});
     </script>
   </body>
 </html>
