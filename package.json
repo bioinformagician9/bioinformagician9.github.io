@@ -1,0 +1,31 @@
+{
+  "name": "bioinformagician",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build-css": "tailwindcss -i ./src/tailwind.css -o ./src/css/tailwind.css",
+    "build-dev": " live-server ./build",
+    "build-src": " live-server ./src",
+    "build": "gulp"
+  },
+  "keywords": [],
+  "author": "Khushbu Patel",
+  "license": "ISC",
+  "devDependencies": {
+    "autoprefixer": "^10.4.8",
+    "gulp": "^4.0.2",
+    "gulp-minify-cssnames": "^2.1.0",
+    "install": "^0.13.0",
+    "live-server": "^1.2.2",
+    "npm": "^8.19.2",
+    "postcss": "^8.4.16",
+    "postcss-cli": "^10.0.0",
+    "prettier": "^2.7.1",
+    "prettier-plugin-tailwindcss": "^0.1.13",
+    "tailwindcss": "^3.1.8"
+  },
+  "overrides": {
+    "graceful-fs": "^4.2.10"
+  }
+}

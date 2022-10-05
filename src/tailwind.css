@@ -1,0 +1,104 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply ud-font-inter;
+  }
+}
+
+.sticky-navbar {
+  @apply ud-fixed ud-border-b ud-bg-opacity-80 ud-backdrop-blur-sm dark:ud-bg-opacity-80;
+}
+
+.sticky-navbar .menu-scroll.active,
+.menu-scroll.active {
+  @apply ud-text-primary dark:ud-text-primary;
+}
+
+.sticky-navbar ul > .menu-item > a {
+  @apply lg:ud-py-[21px];
+}
+
+.submenu-item a.active {
+  @apply ud-text-primary dark:ud-text-white;
+}
+.submenu-item a.active span svg {
+  @apply ud-rotate-180 lg:ud-rotate-0;
+}
+
+.container {
+  @apply ud-w-full sm:ud-max-w-[540px] md:ud-max-w-[720px] lg:ud-max-w-[960px] xl:ud-max-w-[1140px] 2xl:ud-max-w-[1320px];
+}
+
+.keep-signed:checked ~ span.box {
+  @apply ud-border-primary ud-bg-primary;
+}
+
+.keep-signed:checked ~ span.box .icon {
+  @apply ud-block;
+}
+
+#togglePlan:checked ~ span .dot {
+  @apply ud-translate-x-[26px];
+}
+
+.faq .faq-btn::after {
+  content: "+";
+  @apply ud-text-lg ud-font-semibold ud-text-black dark:ud-text-white;
+}
+.faq.active .faq-btn::after {
+  content: "-";
+}
+
+.faq .faq-content {
+  @apply ud-max-h-0 ud-py-0 ud-opacity-0 ud-transition-all ud-duration-100 ud-ease-in-out;
+}
+
+.faq.active .faq-content {
+  @apply ud-max-h-fit ud-py-[30px]  ud-opacity-100;
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+  @apply ud-static ud-top-auto ud-bottom-0 ud-flex ud-h-10 ud-w-10 ud-items-center ud-justify-center ud-rounded-full ud-border ud-border-body ud-text-body after:ud-hidden hover:ud-border-primary hover:ud-bg-primary hover:ud-text-white;
+}
+
+.parent {
+  pointer-events:none;        
+}
+.child {
+  pointer-events:auto;
+}
+
+
+.floating { 
+  animation-name: floating;
+  animation-duration: 3s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes floating {
+  0% { transform: translate(0,  0px); }
+  50%  { transform: translate(0, 15px); }
+  100%   { transform: translate(0, -0px); }   
+}
+
+@keyframes float {
+	0% {
+		box-shadow: 0 5px 15px 0px rgba(0,0,0,0.6);
+		transform: translatey(0px);
+	}
+	50% {
+		box-shadow: 0 25px 15px 0px rgba(0,0,0,0.2);
+		transform: translatey(-20px);
+	}
+	100% {
+		box-shadow: 0 5px 15px 0px rgba(0,0,0,0.6);
+		transform: translatey(0px);
+	}
+}
