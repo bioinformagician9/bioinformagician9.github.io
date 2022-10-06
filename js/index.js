@@ -65,20 +65,20 @@
   // Initial Theme Check
   const themeCheck = () => {
     if (userTheme === "dark" || (!userTheme && systemTheme)) {
-      document.documentElement.classList.add("a45");
+      document.documentElement.classList.add("a44");
       return;
     }
   };
 
   // Manual Theme Switch
   const themeSwitch = () => {
-    if (document.documentElement.classList.contains("a45")) {
-      document.documentElement.classList.remove("a45");
+    if (document.documentElement.classList.contains("a44")) {
+      document.documentElement.classList.remove("a44");
       localStorage.setItem("theme", "light");
       return;
     }
 
-    document.documentElement.classList.add("a45");
+    document.documentElement.classList.add("a44");
     localStorage.setItem("theme", "dark");
   };
 
