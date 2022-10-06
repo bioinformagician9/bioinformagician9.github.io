@@ -1014,8 +1014,8 @@ body{
   max-width: 1000px;
 }
 
-.ud-max-w-\[252px\]{
-  max-width: 252px;
+.ud-max-w-\[267px\]{
+  max-width: 267px;
 }
 
 .ud-max-w-\[435px\]{
@@ -1247,11 +1247,6 @@ body{
 .ud-bg-\[\#F8FAFB\]{
   --tw-bg-opacity: 1;
   background-color: rgb(248 250 251 / var(--tw-bg-opacity));
-}
-
-.ud-bg-gray{
-  --tw-bg-opacity: 1;
-  background-color: rgb(248 249 255 / var(--tw-bg-opacity));
 }
 
 .ud-bg-stroke{
