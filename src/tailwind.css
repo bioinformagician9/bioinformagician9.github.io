@@ -102,3 +102,7 @@
 		transform: translatey(0px);
 	}
 }
+
+:root {
+  --plyr-color-main: #1ac266;
+}

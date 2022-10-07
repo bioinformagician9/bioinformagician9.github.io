@@ -1823,6 +1823,10 @@ body{
   }
 }
 
+:root {
+  --plyr-color-main: #1ac266;
+}
+
 .hover\:ud-bg-primary:hover{
   --tw-bg-opacity: 1;
   background-color: rgb(235 99 87 / var(--tw-bg-opacity));
