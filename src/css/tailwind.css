@@ -1567,6 +1567,10 @@ body{
   opacity: 0.7;
 }
 
+.ud-opacity-100{
+  opacity: 1;
+}
+
 .ud-shadow-md{
   --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
@@ -1825,6 +1829,40 @@ body{
 
 :root {
   --plyr-color-main: #1ac266;
+}
+
+.overlay-play-button {
+  /* Used to position the overlay */
+  position: relative;
+}
+
+.overlay-play-button__overlay {
+  /* Position */
+  left: 0;
+  position: absolute;
+  top: 0;
+  /* Take full size */
+  /* height: 100%;
+  width: 100%; */
+  margin-top: 95%;
+  margin-left: 45%;
+  /* Center the content */
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  /* Add a dark background */
+  background-color: red
+}
+
+.overlay-play-button__play {
+  border: 0.25rem solid #fff;
+  border-radius: 9999px;
+  height: 3rem;
+  width: 3rem;
+  /* Center the content */
+  align-items: center;
+  display: flex;
+  justify-content: center;
 }
 
 .hover\:ud-bg-primary:hover{
