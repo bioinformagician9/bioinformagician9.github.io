@@ -145,3 +145,8 @@
   display: flex;
   justify-content: center;
 }
+
+.ud-ml-50{
+
+  margin-left: 50%;
+}
