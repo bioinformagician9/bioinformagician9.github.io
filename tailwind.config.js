@@ -54,13 +54,13 @@ module.exports = {
       },
 
       boxShadow: {
-        card: "0px 1px 5px rgba(45, 74, 170, 0.14)",
-        "card-dark": "0px 1px 5px rgba(16, 25, 55, 0.14)",
-        input: "0px 10px 30px rgba(74, 108, 247, 0.08)",
+        card: "0px 20px 50px rgba(45, 74, 170, 0.14)",
+        "card-dark": "10px 20px 50px rgba(16, 25, 55, 0.14)",
+        input: "0px 10px 50px rgba(74, 108, 247, 0.08)",
       },
       dropShadow: {
-        card: "0px 1px 5px rgba(45, 74, 170, 0.14)",
-        "card-dark": "0px 1px 5px rgba(16, 25, 55, 0.14)",
+        card: "0px 10px 50px rgba(45, 74, 170, 0.14)",
+        "card-dark": "0px 10px 50px rgba(16, 25, 55, 0.14)",
       },
     },
   },
