@@ -916,18 +916,24 @@
 
                 <div class="swiper-slide">
                   <div
-                    class="ud-mx-auto ud-w-full ud-max-w-[267px] xs:ud-max-w-[265px] child"
+                    class="ud-mx-auto ud-w-full ud-w-267 xs:ud-max-w-[265px] child"
                   >
+
                     <img
-                      src="images/screens/screen-5.jpeg"
+                      src="images/screens/screen-1.jpeg"
                       alt="screenshot"
                       class="ud-mx-auto ud-w-full ud-rounded-2xl"
-                      usemap="#img1"
                     />
-                    <map name="img1">
-                      <area shape="rect" coords="108,421,154,385" href="https://youtu.be/5HBzgsz8qyk" id="#" alt="alttext">
-                    </map>
-
+                    <div
+                      class="ud-absolute ud-w-full ud-h-full ud-top-30 ud-right-0 ud-flex ud-items-center ud-justify-center hover:ud-bg-opacity-100 ud-transition"
+                    >
+                        <a
+                          href="https://youtu.be/0b24mpzM_5M"
+                          class="glightbox ud-rounded-full ud-flex ud-items-center ud-justify-center ud-bg-opacity-75 ud-text-primary hover:ud-bg-opacity-100 ud-transition"
+                        >
+                            <img width="40px" src="https://img.icons8.com/doodle/192/000000/play-button-circled.png"/>
+                        </a>
+                    </div>
                   </div>
                 </div>
 
@@ -935,32 +941,70 @@
                   <div
                     class="ud-mx-auto ud-w-full ud-max-w-[267px] xs:ud-max-w-[265px] child"
                   >
+                    
                     <img
-                      src="images/screens/screen-6.png"
+                      src="images/screens/screen-2.jpg"
                       alt="screenshot"
                       class="ud-mx-auto ud-w-full ud-rounded-2xl"
-                      usemap="#img2"
+                     
                     />
-                    <map name="img2">
-                      <area shape="rect" coords="108,421,154,385" href="https://youtu.be/OzNzO8qwwp0" id="#" alt="alttext">
-                    </map>
+                    <div
+                      class="ud-absolute ud-w-full ud-h-full ud-top-30 ud-right-0 ud-flex ud-items-center ud-justify-center"
+                    >
+                        <a
+                          href="https://youtu.be/0b24mpzM_5M"
+                          class="glightbox ud-rounded-full ud-flex ud-items-center ud-justify-center ud-bg-opacity-75 ud-text-primary hover:ud-bg-opacity-100 ud-transition"
+                        >
+                            <img width="40px" src="https://img.icons8.com/doodle/192/000000/play-button-circled.png"/>
+                        </a>
+                    </div>
                   </div>
                 </div>
+                
                 <div class="swiper-slide">
                   <div
                     class="ud-mx-auto ud-w-full ud-max-w-[267px] xs:ud-max-w-[265px] child"
                   >
                     <img
-                      src="images/screens/screen-7.jpeg"
+                      src="images/screens/screen-4.jpg"
                       alt="screenshot"
                       class="ud-mx-auto ud-w-full ud-rounded-2xl"
-                      usemap="#img3"
                     />
-                    <map name="img3">
-                      <area shape="rect" coords="108,421,154,385" href="https://youtu.be/0b24mpzM_5M" id="#" alt="alttext">
-                    </map>
+                    <div
+                      class="ud-absolute ud-w-full ud-h-full ud-top-30 ud-right-0 ud-flex ud-items-center ud-justify-center"
+                    >
+                        <a
+                          href="https://youtu.be/0b24mpzM_5M"
+                          class="glightbox ud-rounded-full ud-flex ud-items-center ud-justify-center ud-bg-opacity-75 ud-text-primary hover:ud-bg-opacity-100 ud-transition"
+                        >
+                            <img width="40px" src="https://img.icons8.com/doodle/192/000000/play-button-circled.png"/>
+                        </a>
+                    </div>
                   </div>
-                </div>              
+                </div>   
+
+
+                <div class="swiper-slide">
+                  <div
+                    class="ud-mx-auto ud-w-full ud-max-w-[267px] xs:ud-max-w-[265px] child"
+                  >
+                    <img
+                      src="images/screens/screen-1.jpg"
+                      alt="screenshot"
+                      class="ud-mx-auto ud-w-full ud-rounded-2xl"
+                    />
+                    <div
+                      class="ud-absolute ud-w-full ud-h-full ud-top-30 ud-right-0 ud-flex ud-items-center ud-justify-center"
+                    >
+                        <a
+                          href="https://youtu.be/0b24mpzM_5M"
+                          class="glightbox ud-rounded-full ud-flex ud-items-center ud-justify-center ud-bg-opacity-75 ud-text-primary hover:ud-bg-opacity-100 ud-transition"
+                        >
+                            <img width="40px" src="https://img.icons8.com/doodle/192/000000/play-button-circled.png"/>
+                        </a>
+                    </div>
+                  </div>
+                </div>             
               </div>
               <div
                 class="ud-flex ud-items-center ud-justify-center ud-space-x-4 ud-pt-20"
@@ -1501,10 +1545,30 @@
       const glightbox = GLightbox({
         });
     </script>
-    <script >
-      const glightbox1 = GLightbox({
-        selector: '.glightbox1',
+
+    <script>
+
+      if (document.querySelector('.video-link')) {
+        const videoButtonSelector = document.querySelector('.video-link');
+        const dataAttribute = videoButtonSelector.getAttribute('data-video-url');
+
+        const glightbox1 = new GLightbox({
+          elements: [
+            {
+              type: 'video',
+              source: 'youtube',
+              href: 'https://youtu.be/OzNzO8qwwp0',
+              touchNavigation: true,
+              loop: false,
+            },
+          ],
         });
+
+        videoButtonSelector.addEventListener('click', (event) => {
+          lightbox.open();
+        });
+      }
+
     </script>
     <script>
       var swiper = new Swiper(".mySwiper", {
