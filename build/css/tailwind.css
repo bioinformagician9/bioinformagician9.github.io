@@ -937,10 +937,6 @@ body{
   width: 90px;
 }
 
-.a13\[267px\]{
-  width: 267px;
-}
-
 .a13\[400px\]{
   width: 400px;
 }
@@ -1881,6 +1877,66 @@ body{
 
 .a3z{
   width:267px;
+}
+
+/* HOVER EFFECT 1 */
+
+.effect-1 a:before,
+.effect-1 a:after,
+.effect-1 li:before{
+  content: "";
+  position: absolute;
+  background-color: #fff;
+  opacity: 1;
+  transition: all .4s;
+}
+
+.effect-1 li:before {
+  width: 0;
+  height: 1px;
+  right: calc(50% - 25px);
+  transition-delay: .6s;
+  top: -8px;
+}
+
+.effect-1 a:before {
+  width:1px;
+  height:0;
+  transform: skew(30deg, 0);
+  transform-origin: 0 0;
+  left: calc(50% - 25px);
+  transition-delay: .3s;
+  top: -8px;
+}
+
+.effect-1 a:after {
+  width:1px;
+  height:0;
+  transform: skew(-30deg, 0);
+  transform-origin: 0 100%;
+  right: calc(50%);
+  transition-delay: 0s;
+  bottom: -16px;
+}
+
+.effect-1 li:hover:before {
+  width: 50px;
+  opacity: 0.5;
+  transition-delay: 0s;
+}
+
+.effect-1 a:hover:before,
+.effect-1 a:hover:after {
+  height: 43px;
+  opacity: 0.5;
+}
+
+.effect-1 a:hover:before {
+  transition-delay: .3s;
+}
+
+.effect-1 a:hover:after {
+  transition-delay: .6s;
 }
 
 .hover\:a1q:hover{
