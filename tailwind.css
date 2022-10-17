@@ -7,12 +7,12 @@
 
 @layer base {
   body {
-    @apply a3T;
+    @apply a3Y;
   }
 }
 
 .sticky-navbar {
-  @apply aw a3U a24 aG dark:a24;
+  @apply aw a3Z a24 aG dark:a24;
 }
 
 .sticky-navbar .menu-scroll.active,
@@ -28,7 +28,7 @@
   @apply aU dark:aV;
 }
 .submenu-item a.active span svg {
-  @apply a3V lg:a3W;
+  @apply a3_ lg:a40;
 }
 
 .container {
@@ -36,7 +36,7 @@
 }
 
 .keep-signed:checked ~ span.box {
-  @apply a3M a1q;
+  @apply a3R a1q;
 }
 
 .keep-signed:checked ~ span.box .icon {
@@ -44,7 +44,7 @@
 }
 
 #togglePlan:checked ~ span .dot {
-  @apply a3X[26px];
+  @apply a41[26px];
 }
 
 .faq .faq-btn::after {
@@ -56,16 +56,16 @@
 }
 
 .faq .faq-content {
-  @apply a3Y aj a18 a3Z a3_ a23;
+  @apply a42 aj a18 a43 a44 a23;
 }
 
 .faq.active .faq-content {
-  @apply a40 a1m[30px]  a1c;
+  @apply a45 a1m[30px]  a1c;
 }
 
 .swiper-button-prev,
 .swiper-button-next {
-  @apply aH a41 a2x ae an ao af ar a2j a3u a42 a1B after:ak hover:a3M hover:a1q hover:aV;
+  @apply aH a46 a2x ae an ao af ar a2j a3u a47 a1B after:ak hover:a3R hover:a1q hover:aV;
 }
 
 .parent {
@@ -146,7 +146,77 @@
   justify-content: center;
 }
 
-.a43{
+.a48{
 
   margin-left: 50%;
+}
+
+.a3A{
+  top: 7rem;
+}
+
+.a3z{
+  width:267px;
+}
+
+
+
+/* HOVER EFFECT 1 */
+
+.effect-1 a:before,
+.effect-1 a:after,
+.effect-1 li:before{
+  content: "";
+  position: absolute;
+  background-color: #fff;
+  opacity: 1;  
+  transition: all .4s;
+}
+
+.effect-1 li:before {
+  width: 0;
+  height: 1px;
+  right: calc(50% - 25px);
+  transition-delay: .6s;
+  top: -8px;
+}
+
+.effect-1 a:before {
+  width:1px;
+  height:0;
+  transform: skew(30deg, 0);
+  transform-origin: 0 0;
+  left: calc(50% - 25px);
+  transition-delay: .3s;
+  top: -8px;
+}
+
+.effect-1 a:after {
+  width:1px;
+  height:0;
+  transform: skew(-30deg, 0);
+  transform-origin: 0 100%;
+  right: calc(50%);
+  transition-delay: 0s;
+  bottom: -16px;
+}
+
+.effect-1 li:hover:before {
+  width: 50px;
+  opacity: 0.5;
+  transition-delay: 0s;
+}
+
+.effect-1 a:hover:before,
+.effect-1 a:hover:after {
+  height: 43px;
+  opacity: 0.5;
+}
+
+.effect-1 a:hover:before {
+  transition-delay: .3s;
+}
+
+.effect-1 a:hover:after {
+  transition-delay: .6s;
 }
