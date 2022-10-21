@@ -7,12 +7,12 @@
 
 @layer base {
   body {
-    @apply a3Y;
+    @apply a3H;
   }
 }
 
 .sticky-navbar {
-  @apply aw a3Z a24 aG dark:a24;
+  @apply aw a3I a2x aG dark:a2x;
 }
 
 .sticky-navbar .menu-scroll.active,
@@ -28,7 +28,7 @@
   @apply aU dark:aV;
 }
 .submenu-item a.active span svg {
-  @apply a3_ lg:a40;
+  @apply a3J lg:a3K;
 }
 
 .container {
@@ -36,7 +36,7 @@
 }
 
 .keep-signed:checked ~ span.box {
-  @apply a3R a1q;
+  @apply a3L a1q;
 }
 
 .keep-signed:checked ~ span.box .icon {
@@ -44,28 +44,28 @@
 }
 
 #togglePlan:checked ~ span .dot {
-  @apply a41[26px];
+  @apply a3M[26px];
 }
 
 .faq .faq-btn::after {
   content: "+";
-  @apply a1C a2e aT dark:aV;
+  @apply a2N a1C aT dark:aV;
 }
 .faq.active .faq-btn::after {
   content: "-";
 }
 
 .faq .faq-content {
-  @apply a42 aj a18 a43 a44 a23;
+  @apply a3N aj a18 a3O a3P a2w;
 }
 
 .faq.active .faq-content {
-  @apply a45 a1m[30px]  a1c;
+  @apply a3Q a1m[30px]  a1c;
 }
 
 .swiper-button-prev,
 .swiper-button-next {
-  @apply aH a46 a2x ae an ao af ar a2j a3u a47 a1B after:ak hover:a3R hover:a1q hover:aV;
+  @apply aH a3R a1Z ae an ao af ar a1K a3r a3S a1N after:ak hover:a3L hover:a1q hover:aV;
 }
 
 .parent {
@@ -146,16 +146,16 @@
   justify-content: center;
 }
 
-.a48{
+.a3T{
 
   margin-left: 50%;
 }
 
-.a3A{
+.a3w{
   top: 7rem;
 }
 
-.a3z{
+.a3v{
   width:267px;
 }
 
