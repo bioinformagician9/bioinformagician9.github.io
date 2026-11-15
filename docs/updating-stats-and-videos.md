@@ -9,7 +9,7 @@ A GitHub Action, **Update YouTube numbers** (`.github/workflows/update-channel.y
 | Subscribers, total views and video count in the hero, the GenBank record, the community map and step 6 | Stay at the Nov 13, 2026 numbers typed into `index.html` |
 | View counts for every video in the atlas and trajectory | View counts for the 15 newest videos only (from the public RSS feed) |
 | New uploads (longer than a minute, not live streams) added as cells, with their real length | New uploads added, with a placeholder length of 10:00 |
-| Footer says "Numbers refresh daily from YouTube. Last updated …" | Footer keeps "Every number comes from the YouTube channel on Nov 13, 2026." |
+| Footer says "Numbers refresh daily from YouTube. Last updated …", with the date in the visitor's own time zone | Footer keeps "Every number comes from the YouTube channel on Nov 13, 2026." |
 
 In practice YouTube's public feed often answers "not found" to GitHub's servers (it did on the first runs, Nov 15, 2026), so without the key the job usually finds nothing and the site keeps its snapshot. The key is what makes the refresh reliable.
 

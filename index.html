@@ -1185,7 +1185,7 @@ if(N>SNAP_N){const real=ERAS.filter(e=>!e.next),last=real[real.length-1],nx=ERAS
   if(CH.views>0){set("views",fmt(CH.views));set("viewsExact",Math.round(CH.views).toLocaleString("en-US"))}
   if(CH.videoCount>0)set("count",String(CH.videoCount));
   const d=Date.parse(CH.statsUpdated||"");
-  if(isFinite(d))$("#asOf").textContent=`Numbers refresh daily from YouTube. Last updated ${new Date(d).toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric",timeZone:"UTC"})}.`;
+  if(isFinite(d))$("#asOf").textContent=`Numbers refresh daily from YouTube. Last updated ${new Date(d).toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"})}.`;
 })();
 
 /* copy buttons */
