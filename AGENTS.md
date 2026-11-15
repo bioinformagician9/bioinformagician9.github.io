@@ -10,6 +10,7 @@ It promotes the @Bioinformagician YouTube channel by Khushbu Patel and tells the
 - `index.html` is the whole homepage: HTML, CSS and JavaScript in one file, no build step.
 - `carousels/` holds LinkedIn carousel and guide PDFs plus `carousels.json`, which the Library section reads.
 - `CNAME` sets the custom domain. It must stay `bioinformagician.info`.
+- `data/channel.js` is generated daily by `.github/workflows/update-channel.yml` running `.github/scripts/update_channel.py` (standard-library Python). It sets `window.CHANNEL`; `index.html` merges it into `RAW` (view counts, new uploads) and the `data-ch` elements, and falls back to the typed-in Nov 13, 2026 snapshot when it's missing. Never hand-edit it or commit an API key; the key lives only in the `YOUTUBE_API_KEY` repo secret. See `docs/updating-stats-and-videos.md`. Because the bot commits daily, `git pull --rebase` before pushing.
 - `404.html` is a small self-contained not-found page in the same tokens and fonts. Keep it in sync if the palette changes.
 - `_config.yml` is a leftover from the old Jekyll site. The old blog, sign-in and sign-up pages and their assets were removed on Nov 15, 2026; don't bring them back.
 

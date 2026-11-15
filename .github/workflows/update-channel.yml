@@ -1,0 +1,35 @@
+name: Update YouTube numbers
+
+on:
+  schedule:
+    - cron: "17 9 * * *"   # every day at 09:17 UTC
+  workflow_dispatch: {}     # "Run workflow" button on the Actions tab
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-channel
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Refresh data/channel.js
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+        run: python3 .github/scripts/update_channel.py
+      - name: Commit if anything changed
+        run: |
+          git add data/channel.js
+          if git diff --cached --quiet; then
+            echo "No changes."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Update YouTube numbers"
+          git push

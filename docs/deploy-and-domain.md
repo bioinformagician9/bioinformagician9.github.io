@@ -21,6 +21,8 @@ git commit -m "Describe the change"
 git push
 ```
 
+The **Update YouTube numbers** action commits `data/channel.js` to `main` once a day. If you keep a copy on your computer, run `git pull` before you start editing, or your push will be rejected.
+
 ## Undoing a change
 
 On github.com, open **Commits**, find the commit, and use **Revert**. Or locally: `git revert <commit-id>` then `git push`.

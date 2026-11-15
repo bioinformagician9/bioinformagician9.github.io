@@ -14,6 +14,8 @@ It tells the channel's story as a single-cell experiment: every video is a cell 
 | `docs/` | Step-by-step guides for making changes yourself. |
 | `AGENTS.md` | Instructions for AI coding agents working on this repo. |
 | `.claude/skills/bioinformagician-design/SKILL.md` | The full design system: colors, fonts, layout, components, copy voice. |
+| `data/channel.js` | YouTube numbers, rewritten daily by the **Update YouTube numbers** action. Don't edit by hand. |
+| `.github/` | The daily update workflow and its script. |
 | `404.html` | The page shown for an address that doesn't exist. Self-contained, same colors and fonts. |
 | `_config.yml` | Leftover setting from the old Jekyll site. Harmless. |
 
@@ -23,6 +25,7 @@ It tells the channel's story as a single-cell experiment: every video is a cell 
 |---|---|
 | Add a LinkedIn carousel or PDF guide | [docs/library-and-carousels.md](docs/library-and-carousels.md) |
 | Change text in a section | [docs/editing-sections.md](docs/editing-sections.md) |
+| Turn on or check the daily YouTube refresh (API key) | [docs/updating-stats-and-videos.md](docs/updating-stats-and-videos.md) |
 | Add a new video or update the channel numbers | [docs/updating-stats-and-videos.md](docs/updating-stats-and-videos.md) |
 | Change a color or font | [docs/colors-and-fonts.md](docs/colors-and-fonts.md) |
 | Publish changes, or fix the domain | [docs/deploy-and-domain.md](docs/deploy-and-domain.md) |
