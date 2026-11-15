@@ -14,7 +14,8 @@ It tells the channel's story as a single-cell experiment: every video is a cell 
 | `docs/` | Step-by-step guides for making changes yourself. |
 | `AGENTS.md` | Instructions for AI coding agents working on this repo. |
 | `.claude/skills/bioinformagician-design/SKILL.md` | The full design system: colors, fonts, layout, components, copy voice. |
-| `blog-*.html`, `signin.html`, `signup.html`, `css/`, `js/`, `images/` | Pages and assets from the previous site, kept as they were. |
+| `404.html` | The page shown for an address that doesn't exist. Self-contained, same colors and fonts. |
+| `_config.yml` | Leftover setting from the old Jekyll site. Harmless. |
 
 ## Common changes
 

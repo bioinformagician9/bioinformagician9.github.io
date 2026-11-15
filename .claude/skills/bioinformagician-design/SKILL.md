@@ -119,7 +119,9 @@ The Library shows the Starter Pack (Notion link) plus whatever `carousels/carous
 ]
 ```
 
-`type` is `carousel` or `guide`; `linkedin` is optional and must start with `https://`; `pages` drives the page dots. Tints are assigned in order: harbor, blush, sage, lilac, sand, aqua.
+`type` is `carousel` or `guide`; `linkedin` is optional and must start with `https://`; `pages` drives the page dots.
+
+Covers: a card shows `cover` (the carousel's first slide, a 4:5 JPG in `carousels/covers/`) when present. Items without one (the Starter Pack, PDF guides) use the designed cover `.lib-cover.made`, which mirrors the carousel covers: warm paper `#FAF8F4`, a soft circle in the top-right corner (mint `#CDEFE4` or peach `#F6CFB6`), a mono uppercase kicker, a heavy Bricolage headline with one word highlighted (`#FBD3CC` underlay), a gray sub line and the "Bioinfor**magician**." wordmark (magician in `#0B5468`, dot in `#EE6457`). Covers stay light in dark mode, like printed slides. Entries feed it with `kicker`, `headline`, `mark`, `sub`. With neither, cards fall back to a tinted cover (harbor, blush, sage, lilac, sand, aqua in order).
 
 ## 8. Copy voice
 

@@ -8,7 +8,8 @@ The Library section shows your Bioinformatics Starter Pack plus every PDF listed
 2. Give it a short file name with no spaces, for example `fastq-basics.pdf`.
 3. Upload it to the `carousels/` folder. On github.com: open the repo, click `carousels`, then **Add file → Upload files**.
 4. Open `carousels/carousels.json` on github.com and click the pencil icon to edit.
-5. Add an entry for it:
+5. Make the card cover: export the carousel's first slide as a JPG about 600 px wide (in Canva: Share → Download → JPG, page 1) and upload it to `carousels/covers/` with the same name as the PDF.
+6. Add an entry for it:
 
 ```json
 [
@@ -17,12 +18,13 @@ The Library section shows your Bioinformatics Starter Pack plus every PDF listed
     "file": "carousels/fastq-basics.pdf",
     "linkedin": "https://www.linkedin.com/posts/your-post-link",
     "pages": 8,
-    "type": "carousel"
+    "type": "carousel",
+    "cover": "carousels/covers/fastq-basics.jpg"
   }
 ]
 ```
 
-6. Click **Commit changes**. The site updates in a minute or two.
+7. Click **Commit changes**. The site updates in a minute or two.
 
 ## Adding more than one
 
@@ -44,6 +46,18 @@ Separate entries with a comma. The order in the file is the order on the page, s
 | `type` | no | `carousel` (default) or `guide`. Controls the filter chips and the label |
 | `pages` | no | Number of pages; sets the page dots. Defaults to 1 |
 | `linkedin` | no | Link to the LinkedIn post. Must start with `https://`. Adds a View on LinkedIn button |
+| `cover` | no | Path to a JPG or PNG of the first slide, used as the card's front |
+| `kicker`, `headline`, `mark`, `sub` | no | For a PDF with no cover image (like a guide), the site draws a cover in the same style as the carousels: `kicker` is the small label at the top, `headline` the big title, `mark` one word of the headline to highlight, `sub` a short line under it |
+
+Without `cover` or `headline`, the card falls back to a plain tinted cover with the title.
+
+### Designed cover example (the trim guide)
+
+```json
+{"type": "guide", "title": "Should I trim before alignment? A decision tree", "file": "carousels/trim-decision-tree.pdf", "pages": 3,
+ "kicker": "NGS decision framework", "headline": "Should I trim before alignment?", "mark": "trim",
+ "sub": "Answer three questions. Get a clear call for any pipeline."}
+```
 
 ## If it doesn't show up
 
@@ -53,4 +67,4 @@ Separate entries with a comma. The order in the file is the order on the page, s
 
 ## Changing the Starter Pack link
 
-Search `index.html` for `Bioinformatics Starter Pack`. The `url` next to it is the Notion link.
+Search `index.html` for `Bioinformatics Starter Pack`. The `url` next to it is the Notion link. Its cover text (kicker and line) is in the `card()` function a few lines below, in the `made({...})` call for the starter.

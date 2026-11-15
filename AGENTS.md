@@ -10,8 +10,8 @@ It promotes the @Bioinformagician YouTube channel by Khushbu Patel and tells the
 - `index.html` is the whole homepage: HTML, CSS and JavaScript in one file, no build step.
 - `carousels/` holds LinkedIn carousel and guide PDFs plus `carousels.json`, which the Library section reads.
 - `CNAME` sets the custom domain. It must stay `bioinformagician.info`.
-- `blog-grid.html`, `blog-details.html`, `signin.html`, `signup.html`, `404.html`, `css/`, `js/`, `images/`, `tailwind.css`, `gulpfile.js` belong to the older site. Leave them alone unless asked.
-- `_config.yml` holds the Google Analytics id for the old Jekyll setup.
+- `404.html` is a small self-contained not-found page in the same tokens and fonts. Keep it in sync if the palette changes.
+- `_config.yml` is a leftover from the old Jekyll site. The old blog, sign-in and sign-up pages and their assets were removed on Nov 15, 2026; don't bring them back.
 
 ## Before you change anything
 

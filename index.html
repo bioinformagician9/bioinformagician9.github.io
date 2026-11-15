@@ -414,6 +414,19 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 .lib-cover.ph{border:1.5px dashed var(--ink-3)}
 .lib-cover.starter{background:var(--band);color:#fff;border-color:transparent}
 .lib-cover.starter img{width:44px;height:44px;border-radius:10px}
+.lib-cover.img{padding:0;background:#F4F1EC}
+.lib-cover.img img{width:100%;height:100%;object-fit:cover;display:block}
+.lib-cover.made{background:#FAF8F4;color:#17232A;justify-content:flex-start;gap:0}
+.lib-cover.made::before{content:"";position:absolute;top:-22%;right:-26%;width:74%;aspect-ratio:1;border-radius:50%;background:var(--blob,#CDEFE4);opacity:.85}
+.lib-cover.made>*{position:relative}
+.lib-cover.made .ky{font:clamp(8px,.75vw,10px)/1.3 var(--font-mono);text-transform:uppercase;letter-spacing:.16em;color:#6B7378;max-width:70%}
+.lib-cover.made .hl{margin-top:auto;font-family:var(--font-display);font-weight:800;font-size:clamp(19px,2.1vw,27px);line-height:1.04;letter-spacing:-.03em}
+.lib-cover.made .hl mark{background:linear-gradient(transparent 52%,#FBD3CC 52%);color:inherit;padding:0 .04em}
+.lib-cover.made .sb{font-size:clamp(10px,.9vw,12px);line-height:1.4;color:#5D6A70;margin-top:10px}
+.lib-cover.made .ft{display:flex;justify-content:space-between;align-items:center;margin-top:16px;font:clamp(9px,.8vw,11px) var(--font-mono);color:#5D6A70;opacity:1}
+.lib-cover.made .wmk{font:700 clamp(11px,1vw,14px) var(--font-display);letter-spacing:-.02em;color:#17232A}
+.lib-cover.made .wmk b{color:#0B5468;font-weight:700}
+.lib-cover.made .wmk i{color:#EE6457;font-style:normal}
 .lib-item .it{font-weight:600;font-size:15px;line-height:1.35;margin-top:4px}
 .lib-item .im{font:12px var(--font-mono);color:var(--ink-3);margin-top:4px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 .lib-ph{font:11px var(--font-mono);border:1px dashed var(--ink-3);border-radius:999px;padding:0 8px;color:var(--hand)}
@@ -694,7 +707,7 @@ dialog#libViewer::backdrop{background:color-mix(in srgb,var(--bg) 70%,transparen
           <li data-g="clone" style="--gc:#19DEBB"><div class="gx"><span class="sym">CLONE</span><span class="tx"><b>Clone the tutorial code</b><span class="copyrow"><code id="clone">git clone https://github.com/kpatel427/YouTubeTutorials.git</code><button class="mini" type="button" data-copy="clone">Copy</button><a class="mini" href="https://github.com/kpatel427/YouTubeTutorials" target="_blank" rel="noopener">GitHub ↗</a></span></span><span class="ex" aria-hidden="true"><i></i></span></div></li>
           <li data-g="follow" style="--gc:#FFBE78"><a class="gx" href="https://www.linkedin.com/in/khushbu-patel-b1a196b5/" target="_blank" rel="noopener"><span class="sym">FOLLOW</span><span class="tx"><b>Follow me on LinkedIn</b><span>Carousels, notes and bioinformatics tips in your feed.</span></span><span class="ex" aria-hidden="true"><i></i></span><span class="go" aria-hidden="true">↗</span></a></li>
           <li data-g="coffee" style="--gc:#FFAB7E"><a class="gx" href="https://www.buymeacoffee.com/bioinformagic" target="_blank" rel="noopener"><span class="sym">COFFEE</span><span class="tx"><b>Buy me a coffee</b><span>Help keep every tutorial free.</span></span><span class="ex" aria-hidden="true"><i></i></span><span class="go" aria-hidden="true">↗</span></a></li>
-          <li data-g="collab" style="--gc:#8FA0FF"><a class="gx" href="https://www.linkedin.com/in/khushbu-patel-b1a196b5/" target="_blank" rel="noopener"><span class="sym">SHARE</span><span class="tx"><b>Shout out or share my LinkedIn articles</b><span>Pass a post on to someone who needs it.</span></span><span class="ex" aria-hidden="true"><i></i></span><span class="go" aria-hidden="true">↗</span></a></li>
+          <li data-g="collab" style="--gc:#8FA0FF"><a class="gx" href="https://www.linkedin.com/in/khushbu-patel-b1a196b5/" target="_blank" rel="noopener"><span class="sym">SHARE</span><span class="tx"><b>Spread the word</b><span>Pass a post on to someone who needs it.</span></span><span class="ex" aria-hidden="true"><i></i></span><span class="go" aria-hidden="true">↗</span></a></li>
           <li data-g="hello" style="--gc:#FF96D5"><div class="gx"><span class="sym">HELLO</span><span class="tx"><b>Questions, ideas or just hi</b><span class="copyrow"><code id="mail">bioinformagician.official@gmail.com</code><button class="mini" type="button" data-copy="mail">Copy</button><a class="mini" href="mailto:bioinformagician.official@gmail.com">Email ↗</a></span></span><span class="ex" aria-hidden="true"><i></i></span></div></li>
         </ol>
       </div>
@@ -1165,15 +1178,20 @@ document.querySelectorAll("[data-copy]").forEach(b=>b.addEventListener("click",(
     {type:"guide",title:"Set up R and Conda for analysis",pages:4,tint:"--harbor",file:"",ph:true}
   ];
   const TYPES={all:"All",carousel:"Carousels",guide:"Guides",starter:"Starter pack"},TY={carousel:"LinkedIn carousel",guide:"PDF guide",starter:"Notion · free"};
-  const logoSrc=$(".logo img").src;
   let filter="all";
   const fl=$("#libFilters");
   fl.innerHTML=Object.entries(TYPES).map(([k,l])=>`<button class="chip" type="button" data-f="${k}" aria-pressed="${k==="all"}">${l}</button>`).join("");
   fl.addEventListener("click",e=>{const b=e.target.closest("[data-f]");if(!b)return;filter=b.dataset.f;fl.querySelectorAll("[data-f]").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));render()});
   function card(it,i){
-    if(it.type==="starter")return `<a class="lib-item" href="${it.url}" target="_blank" rel="noopener"><div class="lib-deck"><div class="lib-cover starter"><span class="ty"><span>Start here</span><span>free</span></span><span class="ct">${esc(it.title)}</span><span class="ft"><img src="${logoSrc}" alt=""><span>Notion ↗</span></span></div></div><div class="it">${esc(it.title)}</div><div class="im"><span>${TY.starter}</span></div></a>`;
-    return `<button class="lib-item" type="button" data-i="${i}"><div class="lib-deck"><div class="lib-cover${it.ph?" ph":""}" style="--t:var(${it.tint})"><span class="ty"><span>${it.type==="carousel"?"Carousel":"Guide"}</span><span>1/${it.pages}</span></span><span class="ct">${esc(it.title)}</span><span class="ft"><span>@Bioinformagician</span><span class="dot"></span></span></div></div>
+    if(it.type==="starter")return `<a class="lib-item" href="${it.url}" target="_blank" rel="noopener"><div class="lib-deck">${made({kicker:"Start here · free",headline:it.title,mark:"Starter",sub:"Where to begin in bioinformatics, gathered on one Notion page.",right:"Notion ↗",blob:"#CDEFE4"})}</div><div class="it">${esc(it.title)}</div><div class="im"><span>${TY.starter}</span></div></a>`;
+    const cover=it.cover?`<div class="lib-cover img"><img src="${encodeURI(it.cover)}" alt="" loading="lazy" decoding="async"></div>`
+      :it.headline?made({kicker:it.kicker,headline:it.headline,mark:it.mark,sub:it.sub,right:`${it.pages} pages →`,blob:"#F6CFB6"})
+      :`<div class="lib-cover${it.ph?" ph":""}" style="--t:var(${it.tint})"><span class="ty"><span>${it.type==="carousel"?"Carousel":"Guide"}</span><span>1/${it.pages}</span></span><span class="ct">${esc(it.title)}</span><span class="ft"><span>@Bioinformagician</span><span class="dot"></span></span></div>`;
+    return `<button class="lib-item" type="button" data-i="${i}"><div class="lib-deck">${cover}</div>
       <div class="it">${esc(it.title)}</div><div class="im"><span>${TY[it.type]} · ${it.pages} pages</span>${it.ph?`<span class="lib-ph">placeholder</span>`:""}</div></button>`}
+  /* a designed cover in the style of the carousel covers: kicker, big headline with one highlighted word, line, wordmark */
+  function made(o){let hl=esc(o.headline||"");const m=esc(o.mark||"");if(m&&hl.includes(m))hl=hl.replace(m,`<mark>${m}</mark>`);
+    return `<div class="lib-cover made" style="--blob:${o.blob}"><span class="ky">${esc(o.kicker||"")}</span><span class="hl">${hl}</span>${o.sub?`<span class="sb">${esc(o.sub)}</span>`:""}<span class="ft"><span class="wmk">Bioinfor<b>magician</b><i>.</i></span><span>${esc(o.right||"")}</span></span></div>`}
   function render(){$("#libShelf").innerHTML=LIB.map((it,i)=>filter==="all"||filter===it.type?card(it,i):"").join("")}
   render();
   /* carousels/carousels.json: when it lists PDFs, they replace the placeholder cards */
@@ -1181,9 +1199,12 @@ document.querySelectorAll("[data-copy]").forEach(b=>b.addEventListener("click",(
     if(!Array.isArray(list))return;
     const tints=["--harbor","--blush","--sage","--lilac","--sand","--aqua"];
     const real=list.filter(x=>x&&x.title&&x.file).map((x,k)=>({type:x.type==="guide"?"guide":"carousel",title:String(x.title),file:String(x.file),
-      linkedin:/^https:\/\//.test(x.linkedin||"")?String(x.linkedin):"",pages:Math.max(1,parseInt(x.pages,10)||1),tint:tints[k%tints.length],ph:false}));
+      linkedin:/^https:\/\//.test(x.linkedin||"")?String(x.linkedin):"",pages:Math.max(1,parseInt(x.pages,10)||1),tint:tints[k%tints.length],ph:false,
+      cover:/^[\w\/.-]+\.(jpe?g|png|webp)$/i.test(x.cover||"")?String(x.cover):"",
+      kicker:x.kicker?String(x.kicker):"",headline:x.headline?String(x.headline):"",mark:x.mark?String(x.mark):"",sub:x.sub?String(x.sub):""}));
     if(!real.length)return;
     LIB=LIB.filter(x=>x.type==="starter").concat(real);render();
+    const note=$(".lib-note");if(note)note.hidden=true;
   }).catch(()=>{});
   const dlg=$("#libViewer");let item=null,page=0;
   function draw(){const it=item,st=$("#lvStage");
