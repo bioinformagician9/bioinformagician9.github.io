@@ -12,7 +12,7 @@ Runs daily from .github/workflows/update-channel.yml. Standard library only.
 Never fails the workflow because YouTube is unreachable: it keeps the
 previous data and exits 0.
 """
-import json, os, re, sys, urllib.parse, urllib.request, xml.etree.ElementTree as ET
+import json, os, re, sys, time, urllib.parse, urllib.request, xml.etree.ElementTree as ET
 from datetime import datetime, timezone
 
 CHANNEL_ID = "UCnXs-Nq1dzMZQOKUHKW3rdw"           # youtube.com/@Bioinformagician
@@ -95,7 +95,23 @@ def from_api(key, known):
 def from_rss(known):
     ns = {"a": "http://www.w3.org/2005/Atom", "yt": "http://www.youtube.com/xml/schemas/2015",
           "media": "http://search.yahoo.com/mrss/"}
-    root = ET.fromstring(get("https://www.youtube.com/feeds/videos.xml?channel_id=" + CHANNEL_ID))
+    # YouTube's feed sometimes answers 404 for a while; try both feed addresses a few times
+    urls = ["https://www.youtube.com/feeds/videos.xml?channel_id=" + CHANNEL_ID,
+            "https://www.youtube.com/feeds/videos.xml?playlist_id=UU" + CHANNEL_ID[2:]]
+    body, last = None, None
+    for attempt in range(3):
+        for url in urls:
+            try:
+                body = get(url)
+                break
+            except Exception as ex:
+                last = ex
+        if body:
+            break
+        time.sleep(5 * (attempt + 1))
+    if not body:
+        raise last
+    root = ET.fromstring(body)
     views, new = {}, []
     for e in root.findall("a:entry", ns):
         vid = e.findtext("yt:videoId", default="", namespaces=ns)

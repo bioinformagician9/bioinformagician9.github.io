@@ -24,6 +24,10 @@ jobs:
         run: python3 .github/scripts/update_channel.py
       - name: Commit if anything changed
         run: |
+          if [ ! -f data/channel.js ]; then
+            echo "No data yet; the site keeps its typed-in numbers."
+            exit 0
+          fi
           git add data/channel.js
           if git diff --cached --quiet; then
             echo "No changes."
@@ -32,4 +36,5 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git commit -m "Update YouTube numbers"
+          git pull --rebase --quiet
           git push
