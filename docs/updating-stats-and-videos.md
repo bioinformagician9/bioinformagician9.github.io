@@ -11,6 +11,8 @@ A GitHub Action, **Update YouTube numbers** (`.github/workflows/update-channel.y
 | New uploads (longer than a minute, not live streams) added as cells, with their real length | New uploads added, with a placeholder length of 10:00 |
 | Footer says "Numbers refresh daily from YouTube. Last updated …" | Footer keeps "Every number comes from the YouTube channel on Nov 13, 2026." |
 
+In practice YouTube's public feed often answers "not found" to GitHub's servers (it did on the first runs, Nov 15, 2026), so without the key the job usually finds nothing and the site keeps its snapshot. The key is what makes the refresh reliable.
+
 If YouTube can't be reached, the job keeps yesterday's data and doesn't fail. If `data/channel.js` is missing, the page shows the typed-in snapshot.
 
 New uploads get a topic guessed from the title (single-cell, variants, RNA-Seq, regulation, formats, talks, otherwise getting started). To fix a guess or a title, copy the video into `const RAW=[` by hand (see below): a video in `RAW` always keeps your topic. New videos join the last era of the trajectory; add a new era to `const ERAS=[` when a new chapter starts.
