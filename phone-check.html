@@ -1,0 +1,12 @@
+<!doctype html><meta charset="utf-8"><meta name="robots" content="noindex"><title>phone check</title>
+<body style="margin:0;font:12px/1.4 monospace;background:#ddd"><div style="display:flex;gap:10px;padding:6px"><iframe id="f" style="height:780px;border:0;background:#fff;flex:none"></iframe><div><div id="b"></div><pre id="r" style="white-space:pre-wrap;width:700px"></pre></div></div>
+<script>
+var q=new URLSearchParams(location.search),W=+(q.get('w')||375),f=document.getElementById('f'),r=document.getElementById('r');
+f.style.width=W+'px';f.src=(q.get('src')||'phone-check-site.html')+'?'+Date.now()+(q.get('h')||'');
+['top','atlas','trajectory','protocols','library','reference','interactome','deposit'].forEach(function(s){var x=document.createElement('button');x.textContent=s;x.onclick=function(){var d=f.contentDocument,e=d.getElementById(s);if(e)e.scrollIntoView();else f.contentWindow.scrollTo(0,0);setTimeout(m,400)};document.getElementById('b').appendChild(x)});
+function m(){var d=f.contentDocument,Wd=d.documentElement.clientWidth,o=[];d.querySelectorAll('body *').forEach(function(el){var b=el.getBoundingClientRect();if(b.width&&(b.right>Wd+1||b.left<-1)){var a=el.parentElement,c=0;while(a&&a!==d.body){if(/auto|scroll|hidden|clip/.test(getComputedStyle(a).overflowX)){c=1;break}a=a.parentElement}if(!c)o.push((el.id?'#'+el.id:'')+'.'+[].slice.call(el.classList).join('.')+'<'+el.tagName+'> '+Math.round(b.left)+'..'+Math.round(b.right))}});
+var sc=[];d.querySelectorAll('.scroll-x,.cmd,.origin').forEach(function(el){if(el.scrollWidth>el.clientWidth+1)sc.push((el.id||el.className)+' '+el.clientWidth+'/'+el.scrollWidth)});
+var errs=(f.contentWindow.__errs||[]);r.textContent='W='+Wd+' docSW='+d.documentElement.scrollWidth+' bodySW='+d.body.scrollWidth+'\noverflow n='+o.length+'\n'+o.slice(0,40).join('\n')+'\ninner scrollers: '+sc.join(' | ')+'\nerrors: '+errs.join(' | ')}
+var x=document.createElement('button');x.textContent='measure';x.onclick=m;document.getElementById('b').appendChild(x);
+f.onload=function(){f.contentWindow.__errs=[];f.contentWindow.addEventListener('error',function(e){f.contentWindow.__errs.push(e.message)});setTimeout(m,2500)};
+</script>
