@@ -98,6 +98,7 @@ section{padding-block:clamp(64px,9vw,120px)}
 .menu-btn[aria-expanded="true"] i::after{transform:translateY(-6px) rotate(-45deg)}
 .secmenu{position:absolute;top:calc(100% + 8px);right:max(16px,env(safe-area-inset-right,0px));width:min(330px,calc(100vw - 32px));max-height:calc(100dvh - 90px);overflow:auto;overscroll-behavior:contain;background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:0 22px 48px -20px rgba(0,0,0,.4);padding:8px;z-index:30}
 .secmenu[hidden]{display:none}
+@media (max-width:560px){.secmenu{left:max(12px,env(safe-area-inset-left,0px));right:max(12px,env(safe-area-inset-right,0px));width:auto}}
 #top[tabindex="-1"]:focus,section[tabindex="-1"]:focus{outline:none}
 .secmenu p{margin:6px 10px 6px;font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
 .secmenu ol{list-style:none;margin:0;padding:0}
