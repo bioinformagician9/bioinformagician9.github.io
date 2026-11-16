@@ -7,6 +7,7 @@ f.style.width=W+'px';f.src=(q.get('src')||'phone-check-site.html')+'?'+Date.now(
 function m(){var d=f.contentDocument,Wd=d.documentElement.clientWidth,o=[];d.querySelectorAll('body *').forEach(function(el){var b=el.getBoundingClientRect();if(b.width&&(b.right>Wd+1||b.left<-1)){var a=el.parentElement,c=0;while(a&&a!==d.body){if(/auto|scroll|hidden|clip/.test(getComputedStyle(a).overflowX)){c=1;break}a=a.parentElement}if(!c)o.push((el.id?'#'+el.id:'')+'.'+[].slice.call(el.classList).join('.')+'<'+el.tagName+'> '+Math.round(b.left)+'..'+Math.round(b.right))}});
 var sc=[];d.querySelectorAll('.scroll-x,.cmd,.origin').forEach(function(el){if(el.scrollWidth>el.clientWidth+1)sc.push((el.id||el.className)+' '+el.clientWidth+'/'+el.scrollWidth)});
 var errs=(f.contentWindow.__errs||[]);r.textContent='W='+Wd+' docSW='+d.documentElement.scrollWidth+' bodySW='+d.body.scrollWidth+'\noverflow n='+o.length+'\n'+o.slice(0,40).join('\n')+'\ninner scrollers: '+sc.join(' | ')+'\nerrors: '+errs.join(' | ')}
+[['down',650],['up',-650]].forEach(function(p){var x=document.createElement('button');x.textContent=p[0];x.onclick=function(){f.contentWindow.scrollBy(0,p[1])};document.getElementById('b').appendChild(x)});
 var x=document.createElement('button');x.textContent='measure';x.onclick=m;document.getElementById('b').appendChild(x);
 f.onload=function(){f.contentWindow.__errs=[];f.contentWindow.addEventListener('error',function(e){f.contentWindow.__errs.push(e.message)});setTimeout(m,2500)};
 </script>
