@@ -53,6 +53,11 @@ Search for `class="panel gb"`. Each line is:
 
 Lines with `class="ph"` are placeholders (shown in the handwriting color). Replace the text and remove `ph` once it's real.
 
+- Write each value as one line of text. The browser wraps long values under the value column, like a GenBank record, so don't add manual line breaks.
+- Qualifier lines under FEATURES (mission, motto, data, origin) use `class="ln q2"`, which indents the label.
+- The LOCUS value uses `class="pw"` so the wide gaps between its fields are kept. `data-ch="count"` on the tutorial number is filled in by the daily refresh.
+- On phones (600px and under) the label column narrows and the text gets slightly smaller, so the record never runs off the screen.
+
 ## Changing the learning paths (step 3)
 
 Search for `const P=[` in the script. Each path is one object with:

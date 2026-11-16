@@ -28,6 +28,7 @@ It promotes the @Bioinformagician YouTube channel by Khushbu Patel and tells the
 - External scripts and fonts: Google Fonts only. Everything else is inline.
 - Write copy in Khushbu's first-person voice: plain, warm, specific. No em dashes, no hype words, nothing that reads as AI-written.
 - The page must work at phone width (360px) with no horizontal scroll, and in light and dark mode.
+- The Atlas (`#umap`), Journey (`#traj`) and Interactome (`#net`) plots redraw in a portrait layout at 600px and under (`PHONE` in the script). If you change one plot's drawing, change both layouts. Tooltips go through `placeTip()` so they stay inside the plot.
 - Do not remove `CNAME` or change the domain.
 
 ## How to check your work
