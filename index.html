@@ -455,7 +455,9 @@ dialog#libViewer::backdrop{background:color-mix(in srgb,var(--bg) 70%,transparen
   .lv-side h3{font-size:18px}
   #lvText{display:none}
   .lv-acts{grid-template-columns:1fr 1fr}
+  .lv-acts .btn{white-space:nowrap;padding-left:10px;padding-right:10px;font-size:14px}
 }
+.lv-full{display:block;max-width:100%;cursor:zoom-in}
 .lv-side{padding:24px;display:flex;flex-direction:column;gap:16px;border-left:1px solid var(--line)}
 @media (max-width:760px){.lv-side{border-left:0;border-top:1px solid var(--line)}}
 .lv-side h3{font-size:22px;line-height:1.15}
@@ -1319,8 +1321,9 @@ document.querySelectorAll("[data-copy]").forEach(b=>b.addEventListener("click",(
     /* real PDFs show as page pictures from carousels/pages/<pdf name>/<n>.jpg, which fit any screen;
        if a picture is missing, the PDF itself is shown instead */
     const pdir=pagesDir(it.file);
-    if(pdir){st.innerHTML=`<img src="${pdir}${page+1}.jpg" alt="${esc(it.title)}, page ${page+1} of ${it.pages}" decoding="async" draggable="false">`;
-      st.firstChild.onerror=()=>{st.innerHTML=`<iframe src="${encodeURI(it.file)}#page=${page+1}&view=FitH" title="${esc(it.title)}"></iframe>`};
+    if(pdir){const src=`${pdir}${page+1}.jpg`;
+      st.innerHTML=`<a class="lv-full" href="${src}" target="_blank" rel="noopener" title="Open this page full size"><img src="${src}" alt="${esc(it.title)}, page ${page+1} of ${it.pages}" decoding="async" draggable="false"></a>`;
+      st.querySelector("img").onerror=()=>{st.innerHTML=`<iframe src="${encodeURI(it.file)}#page=${page+1}&view=FitH" title="${esc(it.title)}"></iframe>`};
       if(page+1<it.pages){const pre=new Image();pre.src=`${pdir}${page+2}.jpg`}}
     else if(it.file){st.innerHTML=`<iframe src="${encodeURI(it.file)}#page=${page+1}&view=FitH" title="${esc(it.title)}"></iframe>`}
     else{const last=page===it.pages-1;
