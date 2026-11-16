@@ -1,0 +1,47 @@
+name: Make carousel page pictures
+
+# When a PDF is added or replaced in carousels/, turn its pages into pictures
+# (carousels/pages/<pdf name>/1.jpg ...) so the Library viewer fits phone screens.
+on:
+  push:
+    branches: [main]
+    paths: ["carousels/*.pdf"]
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: render-carousel-pages
+  cancel-in-progress: false
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Install pdftoppm
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq poppler-utils
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - name: Render pages
+        env:
+          BEFORE: ${{ github.event.before }}
+        run: |
+          # a fresh checkout gives every file the same time, so clear the pages of PDFs changed in this push
+          if [ -n "${BEFORE:-}" ] && git cat-file -e "$BEFORE" 2>/dev/null; then
+            git diff --name-only "$BEFORE" HEAD -- 'carousels/*.pdf' | while read -r pdf; do
+              rm -rf "carousels/pages/$(basename "$pdf" .pdf)"
+            done
+          fi
+          bash .github/scripts/render_carousel_pages.sh
+      - name: Commit if anything changed
+        run: |
+          git add -A carousels/pages
+          if git diff --cached --quiet; then echo "No changes."; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Make carousel page pictures"
+          git pull --rebase --quiet
+          git push

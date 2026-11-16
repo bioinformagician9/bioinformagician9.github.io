@@ -26,6 +26,14 @@ The Library section shows your Bioinformatics Starter Pack plus every PDF listed
 
 7. Click **Commit changes**. The site updates in a minute or two.
 
+### Page pictures (why the viewer fits phones)
+
+The viewer doesn't show the PDF itself. It shows one picture per page from `carousels/pages/<pdf name>/1.jpg, 2.jpg ...`, which fit any screen and can be swiped on a phone. The **Download PDF** button still gives the real PDF.
+
+You don't make these pictures yourself. When you upload or replace a PDF in `carousels/`, the **Make carousel page pictures** job on the Actions tab makes them and commits them, usually within a minute. Until it finishes, the viewer shows the PDF instead.
+
+To make them on your own computer instead, run `bash .github/scripts/render_carousel_pages.sh` from the repo folder (it needs `pdftoppm`, part of poppler).
+
 ## Adding more than one
 
 Separate entries with a comma. The order in the file is the order on the page, so put the newest first if you like.

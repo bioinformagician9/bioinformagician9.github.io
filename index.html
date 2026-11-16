@@ -444,6 +444,18 @@ dialog#libViewer::backdrop{background:color-mix(in srgb,var(--bg) 70%,transparen
 .lv-page .pg{font:12px var(--font-mono);color:var(--ink-3);display:flex;justify-content:space-between}
 .lv-page.ph{border:1.5px dashed var(--ink-3)}
 .lv-stage iframe{width:100%;height:min(70dvh,640px);border:0;border-radius:10px;background:var(--surface)}
+.lv-stage img{display:block;width:auto;height:auto;max-width:100%;max-height:min(74dvh,720px);border-radius:10px;background:var(--surface);box-shadow:0 1px 2px rgba(0,0,0,.06);touch-action:pan-y pinch-zoom;user-select:none;-webkit-user-select:none}
+@media (max-width:760px){
+  dialog#libViewer{max-width:calc(100vw - 16px);max-height:calc(100dvh - 16px)}
+  .lv-box{max-height:calc(100dvh - 16px);border-radius:16px}
+  .lv-stage{padding:10px}
+  .lv-stage img{max-height:calc(100dvh - 250px)}
+  .lv-stage iframe{height:calc(100dvh - 250px)}
+  .lv-side{padding:14px 16px 16px;gap:10px}
+  .lv-side h3{font-size:18px}
+  #lvText{display:none}
+  .lv-acts{grid-template-columns:1fr 1fr}
+}
 .lv-side{padding:24px;display:flex;flex-direction:column;gap:16px;border-left:1px solid var(--line)}
 @media (max-width:760px){.lv-side{border-left:0;border-top:1px solid var(--line)}}
 .lv-side h3{font-size:22px;line-height:1.15}
@@ -1300,10 +1312,17 @@ document.querySelectorAll("[data-copy]").forEach(b=>b.addEventListener("click",(
     const note=$(".lib-note");if(note)note.hidden=true;
   }).catch(()=>{});
   const dlg=$("#libViewer");let item=null,page=0;
+  function pagesDir(f){const m=/^carousels\/([\w.-]+)\.pdf$/i.exec(f||"");return m?`carousels/pages/${encodeURIComponent(m[1])}/`:""}
   function draw(){const it=item,st=$("#lvStage");
     $("#lvType").textContent=TY[it.type]+(it.ph?" · placeholder":"");$("#lvTitle").textContent=it.title;
     $("#lvText").textContent=it.ph?"This is a placeholder. Add the PDF and it shows here page by page, with a download button.":"Flip through it here, or download the PDF to keep.";
-    if(it.file){st.innerHTML=`<iframe src="${encodeURI(it.file)}#page=${page+1}" title="${esc(it.title)}"></iframe>`}
+    /* real PDFs show as page pictures from carousels/pages/<pdf name>/<n>.jpg, which fit any screen;
+       if a picture is missing, the PDF itself is shown instead */
+    const pdir=pagesDir(it.file);
+    if(pdir){st.innerHTML=`<img src="${pdir}${page+1}.jpg" alt="${esc(it.title)}, page ${page+1} of ${it.pages}" decoding="async" draggable="false">`;
+      st.firstChild.onerror=()=>{st.innerHTML=`<iframe src="${encodeURI(it.file)}#page=${page+1}&view=FitH" title="${esc(it.title)}"></iframe>`};
+      if(page+1<it.pages){const pre=new Image();pre.src=`${pdir}${page+2}.jpg`}}
+    else if(it.file){st.innerHTML=`<iframe src="${encodeURI(it.file)}#page=${page+1}&view=FitH" title="${esc(it.title)}"></iframe>`}
     else{const last=page===it.pages-1;
       st.innerHTML=`<div class="lv-page${it.ph?" ph":""}" style="--t:var(${page===0||last?it.tint:"--surface"})">${page===0?`<span class="pg"><span>${it.type==="carousel"?"Carousel":"Guide"}</span><span>swipe →</span></span><span class="big">${esc(it.title)}</span><span class="pg"><span>@Bioinformagician</span><span>1/${it.pages}</span></span>`
         :last?`<span class="pg"><span></span><span>${page+1}/${it.pages}</span></span><span class="big">Found this useful? Save it and share it.</span><span class="pg"><span>youtube.com/@Bioinformagician</span><span></span></span>`
@@ -1315,6 +1334,11 @@ document.querySelectorAll("[data-copy]").forEach(b=>b.addEventListener("click",(
   $("#libShelf").addEventListener("click",e=>{const b=e.target.closest("button.lib-item");if(!b)return;item=LIB[+b.dataset.i];page=0;draw();if(dlg.showModal)dlg.showModal();else dlg.setAttribute("open","")});
   $("#lvPrev").onclick=()=>{if(page>0){page--;draw()}};$("#lvNext").onclick=()=>{if(item&&page<item.pages-1){page++;draw()}};
   $("#lvClose").onclick=()=>dlg.close();
+  /* swipe left or right on the page to flip */
+  let tx=null,ty=0;const stg=$("#lvStage");
+  stg.addEventListener("touchstart",e=>{if(e.touches.length!==1){tx=null;return}tx=e.touches[0].clientX;ty=e.touches[0].clientY},{passive:true});
+  stg.addEventListener("touchend",e=>{if(tx===null)return;const t=e.changedTouches[0],dx=t.clientX-tx,dy=t.clientY-ty;tx=null;
+    if(Math.abs(dx)>40&&Math.abs(dx)>Math.abs(dy)*1.3)$(dx<0?"#lvNext":"#lvPrev").click()},{passive:true});
   dlg.addEventListener("click",e=>{if(e.target===dlg)dlg.close()});
   dlg.addEventListener("keydown",e=>{if(e.key==="ArrowRight")$("#lvNext").click();if(e.key==="ArrowLeft")$("#lvPrev").click()});
 })();
