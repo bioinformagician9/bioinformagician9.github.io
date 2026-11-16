@@ -84,6 +84,30 @@ section{padding-block:clamp(64px,9vw,120px)}
 .nav .btn{padding:8px 14px;font-size:14px}
 @media (max-width:980px){.nav ul{display:none}}
 @media (max-width:460px){.mode span{display:none}.logo .wm{display:none}}
+/* section menu (hamburger) */
+.nav .wrap{position:relative}
+.menu-btn{width:40px;height:40px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--ink);display:grid;place-items:center;cursor:pointer;padding:0;flex:none}
+.menu-btn:hover{background:var(--surface-2)}
+.menu-btn:focus-visible,.secmenu a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.menu-btn i,.menu-btn i::before,.menu-btn i::after{display:block;width:18px;height:2px;border-radius:2px;background:currentColor;transition:transform .2s,background .2s}
+.menu-btn i{position:relative}
+.menu-btn i::before,.menu-btn i::after{content:"";position:absolute;left:0}
+.menu-btn i::before{top:-6px}.menu-btn i::after{top:6px}
+.menu-btn[aria-expanded="true"] i{background:transparent}
+.menu-btn[aria-expanded="true"] i::before{transform:translateY(6px) rotate(45deg)}
+.menu-btn[aria-expanded="true"] i::after{transform:translateY(-6px) rotate(-45deg)}
+.secmenu{position:absolute;top:calc(100% + 8px);right:max(16px,env(safe-area-inset-right,0px));width:min(330px,calc(100vw - 32px));max-height:calc(100dvh - 90px);overflow:auto;overscroll-behavior:contain;background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:0 22px 48px -20px rgba(0,0,0,.4);padding:8px;z-index:30}
+.secmenu[hidden]{display:none}
+#top[tabindex="-1"]:focus,section[tabindex="-1"]:focus{outline:none}
+.secmenu p{margin:6px 10px 6px;font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.secmenu ol{list-style:none;margin:0;padding:0}
+.secmenu a{display:grid;grid-template-columns:26px 1fr;gap:1px 8px;align-items:baseline;padding:9px 10px;border-radius:10px;text-decoration:none;color:var(--ink)}
+.secmenu a:hover{background:var(--surface-2)}
+.secmenu a[aria-current]{background:color-mix(in srgb,var(--accent) 14%,transparent)}
+.secmenu b{font-family:var(--font-mono);font-size:11px;font-weight:500;color:var(--ink-3)}
+.secmenu a[aria-current] b{color:var(--accent)}
+.secmenu span{font-weight:600;font-size:15px}
+.secmenu small{grid-column:2;font-size:12.5px;color:var(--ink-2)}
 
 /* hero */
 .hero{padding-block:clamp(40px,6vw,80px) clamp(48px,7vw,90px);background:radial-gradient(42% 60% at 82% 40%,color-mix(in srgb,var(--grad-a) 16%,transparent),transparent 70%),radial-gradient(30% 45% at 96% 80%,color-mix(in srgb,var(--grad-b) 18%,transparent),transparent 70%)}
@@ -516,6 +540,20 @@ html,body{overflow-x:clip}
     <div class="nav-r">
       <button class="mode" type="button" id="modeBtn" aria-label="Switch theme"><i></i><span id="modeLbl">brightfield</span></button>
       <a class="btn primary" href="https://www.youtube.com/c/Bioinformagician/?sub_confirmation=1" target="_blank" rel="noopener">Subscribe</a>
+      <button class="menu-btn" type="button" id="menuBtn" aria-expanded="false" aria-controls="secMenu" aria-label="Open section menu"><i aria-hidden="true"></i></button>
+    </div>
+    <div class="secmenu" id="secMenu" role="region" aria-label="Jump to a section" hidden>
+      <p>Jump to</p>
+      <ol>
+        <li><a href="#top"><b>00</b><span>Home</span><small>Back to the top</small></a></li>
+        <li><a href="#atlas"><b>01</b><span>Atlas</span><small>Every tutorial as a cell</small></a></li>
+        <li><a href="#trajectory"><b>02</b><span>Journey</span><small>The path, run as a pipeline</small></a></li>
+        <li><a href="#protocols"><b>03</b><span>Learning path</span><small>Written like a lab protocol</small></a></li>
+        <li><a href="#library"><b>04</b><span>Library</span><small>Notes and carousels you can keep</small></a></li>
+        <li><a href="#reference"><b>05</b><span>About</span><small>The person behind the pipeline</small></a></li>
+        <li><a href="#interactome"><b>06</b><span>Interactome</span><small>Collaborators and community</small></a></li>
+        <li><a href="#deposit"><b>07</b><span>Connect</span><small>Add your cell to the atlas</small></a></li>
+      </ol>
     </div>
   </div>
 </nav>
@@ -1346,6 +1384,41 @@ document.querySelectorAll("[data-copy]").forEach(b=>b.addEventListener("click",(
   dlg.addEventListener("keydown",e=>{if(e.key==="ArrowRight")$("#lvNext").click();if(e.key==="ArrowLeft")$("#lvPrev").click()});
 })();
 
+})();
+</script>
+<script>
+/* section menu (hamburger) */
+(function(){
+  var btn=document.getElementById('menuBtn'),panel=document.getElementById('secMenu');
+  if(!btn||!panel)return;
+  var links=[].slice.call(panel.querySelectorAll('a'));
+  var secs=links.map(function(a){return document.querySelector(a.getAttribute('href'))});
+  function mark(){
+    var y=innerHeight*0.35,k=0;
+    secs.forEach(function(sec,i){if(sec&&sec.getBoundingClientRect().top<=y)k=i});
+    links.forEach(function(a,i){if(i===k)a.setAttribute('aria-current','true');else a.removeAttribute('aria-current')});
+  }
+  function open(){mark();panel.hidden=false;btn.setAttribute('aria-expanded','true');btn.setAttribute('aria-label','Close section menu');(panel.querySelector('a[aria-current]')||links[0]).focus({preventScroll:true})}
+  function close(refocus){if(panel.hidden)return;panel.hidden=true;btn.setAttribute('aria-expanded','false');btn.setAttribute('aria-label','Open section menu');if(refocus)btn.focus()}
+  btn.addEventListener('click',function(){panel.hidden?open():close(true)});
+  panel.addEventListener('click',function(e){
+    var a=e.target.closest('a');if(!a)return;
+    var t=document.querySelector(a.getAttribute('href'));close(false);
+    if(t){e.preventDefault();t.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});
+      if(!t.hasAttribute('tabindex'))t.setAttribute('tabindex','-1');t.focus({preventScroll:true});
+      history.replaceState(null,'',a.getAttribute('href'));}
+  });
+  document.addEventListener('click',function(e){if(!panel.hidden&&!panel.contains(e.target)&&!btn.contains(e.target))close(false)});
+  document.addEventListener('keydown',function(e){
+    if(panel.hidden)return;
+    if(e.key==='Escape'){e.preventDefault();close(true);return}
+    if(e.key==='ArrowDown'||e.key==='ArrowUp'||e.key==='Home'||e.key==='End'){
+      e.preventDefault();var i=links.indexOf(document.activeElement),n=links.length;
+      i=e.key==='Home'?0:e.key==='End'?n-1:e.key==='ArrowDown'?(i+1)%n:(i-1+n)%n;links[i].focus();
+    }
+  });
+  panel.addEventListener('focusout',function(e){var r=e.relatedTarget;if(r&&!panel.contains(r)&&r!==btn)close(false)});
+  addEventListener('scroll',function(){if(!panel.hidden)mark()},{passive:true});
 })();
 </script>
 </body>

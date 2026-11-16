@@ -36,7 +36,7 @@ It promotes the @Bioinformagician YouTube channel by Khushbu Patel and tells the
 
 There is no test suite. Open `index.html` in a browser (or run `python3 -m http.server` in the repo and open http://localhost:8000 so `carousels/carousels.json` loads), then:
 
-- Click through every nav link and section.
+- Click through every nav link and section, and open the section menu (three-line button) on a phone width and a desktop width.
 - Toggle the theme button (brightfield / darkfield).
 - Open a Library card and flip pages.
 - Check the browser console for errors.

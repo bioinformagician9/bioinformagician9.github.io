@@ -5,7 +5,7 @@ Everything lives in `index.html`. Use your editor's search (Cmd+F) to jump to th
 ## How the file is laid out
 
 1. `<head>`: page title, description, fonts, and one big `<style>` block with all the CSS.
-2. `<nav>`: logo, wordmark, section links, theme toggle, Subscribe button.
+2. `<nav>`: logo, wordmark, section links, theme toggle, Subscribe button, and the section menu button.
 3. `<header class="hero" id="top">`: the decoded sequencing read and the wizard hat.
 4. One `<section id="...">` per step, in page order:
    - `#atlas`: step 1, the UMAP of all videos
@@ -79,11 +79,16 @@ Search for `step 6 · deposit your results`. Each link is an `<li>` with an `<a 
 
 ## Changing the nav links
 
-Search for `<li><a href="#atlas">`. Each link points to a section id.
+There are two sets of links, and both point to section ids:
+
+- The short links across the top on wide screens. Search for `<li><a href="#atlas">Atlas</a></li>`.
+- The section menu behind the round button with three lines (the hamburger), shown on every screen size. Search for `id="secMenu"`. Each item is an `<li>` with a number in `<b>`, the name in `<span>` and a one-line hint in `<small>`.
+
+When you add, remove or rename a section, update both.
 
 ## Things to avoid
 
-- Don't delete a `<section>` without also removing its nav link.
+- Don't delete a `<section>` without also removing its nav link and its item in the section menu.
 - Don't rename `id`s or `class`es; the CSS and JavaScript look for them.
 - Don't paste text with em dashes or smart quotes from Word if you can avoid it; plain quotes are safest in HTML.
 - After editing, open the page and check the browser console (right-click, Inspect, Console) for red errors.
