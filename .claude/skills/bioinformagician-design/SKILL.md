@@ -99,6 +99,7 @@ Always write the brand as **Bioinformagician** (capital B). The handle is **@Bio
 - **Chips**: filter pills with `aria-pressed`.
 - **Placeholder**: `.placeholder` dashed box with a `.tag`. Use for content that is not real yet; never ship fake numbers.
 - **Library card**: `.lib-item` with a `.lib-cover` deck in a tint color, type and page count on top, title in display font, `@Bioinformagician` at the bottom. Opens `#libViewer` (a `<dialog>`) with page dots, prev/next, Download PDF and View on LinkedIn.
+- **Library pager**: `#libPager` under the shelf, a hairline top border, a mono `1–8 of 11` count on the left and `.chip` buttons (← Prev, numbers, Next →) on the right; the current page uses the pressed chip style. Two rows per page: 8 cards above 980px, 6 below. Hidden when everything fits on one page; centered on phones.
 - **GenBank record**: `.panel.gb` in mono, labels in `--C`, placeholders in `--hand`.
 - **Tooltips**: on hover over cells and nodes, title in body font, meta line below.
 

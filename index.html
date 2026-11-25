@@ -458,6 +458,13 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 .lib-item .im{font:12px var(--font-mono);color:var(--ink-3);margin-top:4px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 .lib-ph{font:11px var(--font-mono);border:1px dashed var(--ink-3);border-radius:999px;padding:0 8px;color:var(--hand)}
 .lib-note{font-size:14px;color:var(--ink-3);margin-top:28px}
+.lib-pager{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 16px;margin-top:clamp(28px,4vw,44px);padding-top:18px;border-top:1px solid var(--line)}
+.lib-pager[hidden]{display:none}
+.lib-pager .pg-count{font:12px var(--font-mono);color:var(--ink-3)}
+.lib-pager .pg-nums{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.lib-pager .pg-nums .chip{min-width:36px;justify-content:center;font-family:var(--font-mono)}
+.lib-pager .chip[disabled]{opacity:.4;cursor:default}
+@media (max-width:600px){.lib-pager{justify-content:center}.lib-pager .pg-count{width:100%;text-align:center}}
 dialog#libViewer{border:0;padding:0;background:transparent;max-width:min(960px,calc(100vw - 24px));width:100%;max-height:calc(100dvh - 24px);color:var(--ink)}
 dialog#libViewer::backdrop{background:color-mix(in srgb,var(--bg) 70%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
 .lv-box{background:var(--surface);border:1px solid var(--line);border-radius:20px;box-shadow:0 30px 60px -30px rgba(3,76,95,.45);display:grid;grid-template-columns:1fr 280px;overflow:hidden;max-height:calc(100dvh - 24px)}
@@ -702,6 +709,7 @@ html,body{overflow-x:clip}
     </div>
     <div class="lib-filters" id="libFilters" role="group" aria-label="Filter the library"></div>
     <div class="lib-shelf" id="libShelf"></div>
+    <nav class="lib-pager" id="libPager" aria-label="Library pages" hidden></nav>
     <p class="lib-note">Dashed covers are placeholders. Each one becomes a real carousel or guide once its PDF is added.</p>
   </div>
 </section>
@@ -1327,7 +1335,16 @@ document.querySelectorAll("[data-copy]").forEach(b=>b.addEventListener("click",(
   let filter="all";
   const fl=$("#libFilters");
   fl.innerHTML=Object.entries(TYPES).map(([k,l])=>`<button class="chip" type="button" data-f="${k}" aria-pressed="${k==="all"}">${l}</button>`).join("");
-  fl.addEventListener("click",e=>{const b=e.target.closest("[data-f]");if(!b)return;filter=b.dataset.f;fl.querySelectorAll("[data-f]").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));render()});
+  fl.addEventListener("click",e=>{const b=e.target.closest("[data-f]");if(!b)return;filter=b.dataset.f;pg=0;fl.querySelectorAll("[data-f]").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));render()});
+  /* paging: two rows of cards per page (8 on wide screens, 6 on tablets and phones), so new carousels can keep coming */
+  let pg=0;
+  const perPage=()=>innerWidth>980?8:6;
+  let lastPer=perPage();
+  addEventListener("resize",()=>{const n=perPage();if(n!==lastPer){const first=pg*lastPer;lastPer=n;pg=Math.floor(first/n);render()}});
+  $("#libPager").addEventListener("click",e=>{const b=e.target.closest("[data-pg]");if(!b||b.disabled)return;
+    pg=+b.dataset.pg;render();
+    $("#library").scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"start"});
+    const f=$("#libShelf .lib-item");if(f)f.focus({preventScroll:true})});
   function card(it,i){
     if(it.type==="starter")return `<a class="lib-item" href="${it.url}" target="_blank" rel="noopener"><div class="lib-deck">${made({kicker:"Start here · free",headline:it.title,mark:"Starter",sub:"Where to begin in bioinformatics, gathered on one Notion page.",right:"Notion ↗",blob:"#CDEFE4"})}</div><div class="it">${esc(it.title)}</div><div class="im"><span>${TY.starter}</span></div></a>`;
     const cover=it.cover?`<div class="lib-cover img"><img src="${encodeURI(it.cover)}" alt="" loading="lazy" decoding="async"></div>`
@@ -1338,7 +1355,16 @@ document.querySelectorAll("[data-copy]").forEach(b=>b.addEventListener("click",(
   /* a designed cover in the style of the carousel covers: kicker, big headline with one highlighted word, line, wordmark */
   function made(o){let hl=esc(o.headline||"");const m=esc(o.mark||"");if(m&&hl.includes(m))hl=hl.replace(m,`<mark>${m}</mark>`);
     return `<div class="lib-cover made" style="--blob:${o.blob}"><span class="ky">${esc(o.kicker||"")}</span><span class="hl">${hl}</span>${o.sub?`<span class="sb">${esc(o.sub)}</span>`:""}<span class="ft"><span class="wmk">Bioinfor<b>magician</b><i>.</i></span><span>${esc(o.right||"")}</span></span></div>`}
-  function render(){$("#libShelf").innerHTML=LIB.map((it,i)=>filter==="all"||filter===it.type?card(it,i):"").join("")}
+  function render(){
+    const shown=LIB.map((it,i)=>[it,i]).filter(([it])=>filter==="all"||filter===it.type),per=perPage(),n=Math.max(1,Math.ceil(shown.length/per));
+    lastPer=per;pg=Math.min(Math.max(0,pg),n-1);
+    $("#libShelf").innerHTML=shown.slice(pg*per,pg*per+per).map(([it,i])=>card(it,i)).join("");
+    const nav=$("#libPager");nav.hidden=n<2;if(n<2){nav.innerHTML="";return}
+    const a=pg*per+1,b=Math.min(shown.length,a+per-1);
+    nav.innerHTML=`<span class="pg-count">${a}–${b} of ${shown.length}</span>
+      <div class="pg-nums"><button class="chip" type="button" data-pg="${pg-1}"${pg===0?" disabled":""} aria-label="Previous page">← Prev</button>
+      ${Array.from({length:n},(_,k)=>`<button class="chip" type="button" data-pg="${k}" aria-pressed="${k===pg}" aria-label="Page ${k+1}"${k===pg?' aria-current="page"':""}>${k+1}</button>`).join("")}
+      <button class="chip" type="button" data-pg="${pg+1}"${pg===n-1?" disabled":""} aria-label="Next page">Next →</button></div>`}
   render();
   /* carousels/carousels.json: when it lists PDFs, they replace the placeholder cards */
   fetch("carousels/carousels.json",{cache:"no-cache"}).then(r=>r.ok?r.json():null).then(list=>{

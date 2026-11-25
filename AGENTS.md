@@ -8,7 +8,7 @@ The Bioinformagician website, served by GitHub Pages at https://bioinformagician
 It promotes the @Bioinformagician YouTube channel by Khushbu Patel and tells the channel's story as a single-cell experiment.
 
 - `index.html` is the whole homepage: HTML, CSS and JavaScript in one file, no build step.
-- `carousels/` holds LinkedIn carousel and guide PDFs plus `carousels.json`, which the Library section reads.
+- `carousels/` holds LinkedIn carousel and guide PDFs plus `carousels.json`, which the Library section reads. The list is newest first (new carousels go at the top, guides at the end), and the Library pages itself: `perPage()` gives 8 cards per page above 980px and 6 below, with a pager (`#libPager`) that hides when one page is enough.
 - `carousels/pages/<pdf name>/<n>.jpg` are the page pictures the Library viewer shows (1080 px wide, so they fit phones; the PDF is only the download and the fallback). `.github/workflows/render-carousel-pages.yml` makes them with `.github/scripts/render_carousel_pages.sh` whenever a PDF in `carousels/` is pushed; run the script locally if you add PDFs in the same change.
 - `CNAME` sets the custom domain. It must stay `bioinformagician.info`.
 - `data/channel.js` is generated daily by `.github/workflows/update-channel.yml` running `.github/scripts/update_channel.py` (standard-library Python). It sets `window.CHANNEL`; `index.html` merges it into `RAW` (view counts, new uploads) and the `data-ch` elements, and falls back to the typed-in Nov 13, 2026 snapshot when it's missing. Never hand-edit it or commit an API key; the key lives only in the `YOUTUBE_API_KEY` repo secret. See `docs/updating-stats-and-videos.md`. Because the bot commits daily, `git pull --rebase` before pushing.

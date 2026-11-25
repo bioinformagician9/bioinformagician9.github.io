@@ -5,26 +5,25 @@ The Library section shows your Bioinformatics Starter Pack plus every PDF listed
 ## Add a new carousel
 
 1. Export the carousel from Canva (or wherever you made it) as a PDF.
-2. Give it a short file name with no spaces, for example `fastq-basics.pdf`.
+2. Give it a short file name with no spaces, numbered after the last one, for example `10-bam-files.pdf`.
 3. Upload it to the `carousels/` folder. On github.com: open the repo, click `carousels`, then **Add file → Upload files**.
-4. Open `carousels/carousels.json` on github.com and click the pencil icon to edit.
-5. Make the card cover: export the carousel's first slide as a JPG about 600 px wide (in Canva: Share → Download → JPG, page 1) and upload it to `carousels/covers/` with the same name as the PDF.
-6. Add an entry for it:
+4. Make the card cover: export the carousel's first slide as a JPG about 600 px wide (in Canva: Share → Download → JPG, page 1) and upload it to `carousels/covers/` with the same name as the PDF (`10-bam-files.jpg`).
+5. Open `carousels/carousels.json` on github.com and click the pencil icon to edit.
+6. Add an entry for it as the **first** line inside the `[`, with a comma after it. The list is newest first:
 
 ```json
 [
-  {
-    "title": "What's inside a FASTQ file",
-    "file": "carousels/fastq-basics.pdf",
-    "linkedin": "https://www.linkedin.com/posts/your-post-link",
-    "pages": 8,
-    "type": "carousel",
-    "cover": "carousels/covers/fastq-basics.jpg"
-  }
+  {"type": "carousel", "title": "BAM files, explained", "file": "carousels/10-bam-files.pdf", "linkedin": "https://www.linkedin.com/posts/your-post-link", "pages": 9, "cover": "carousels/covers/10-bam-files.jpg"},
+  {"type": "carousel", "title": "Blood vs saliva vs tumor: why sample type matters", ...},
+  ...
 ]
 ```
 
 7. Click **Commit changes**. The site updates in a minute or two.
+
+### Pages in the Library
+
+You never have to manage pages. The Library shows two rows of cards at a time, 8 on wide screens and 6 on tablets and phones, and adds Prev, page numbers and Next under the cards as soon as there are more. The Starter Pack always comes first, then the entries in the order of `carousels.json`. The filter chips (Carousels, Guides) page the same way. To change how many cards a page holds, edit `perPage` in the library script in `index.html`.
 
 ### Page pictures (why the viewer fits phones)
 
@@ -36,7 +35,7 @@ To make them on your own computer instead, run `bash .github/scripts/render_caro
 
 ## Adding more than one
 
-Separate entries with a comma. The order in the file is the order on the page, so put the newest first if you like.
+Separate entries with a comma. The order in the file is the order on the page, so keep the newest first.
 
 ```json
 [
