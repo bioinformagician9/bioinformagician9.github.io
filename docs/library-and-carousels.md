@@ -1,6 +1,6 @@
 # Library: adding carousels and PDF guides
 
-The Library section shows your Bioinformatics Starter Pack plus every PDF listed in `carousels/carousels.json`. While that list is empty, the Library shows sample cards so the section doesn't look bare. As soon as it has one real entry, the sample cards disappear.
+The Library section shows every PDF listed in `carousels/carousels.json`. While that list is empty, the Library shows sample cards so the section doesn't look bare. As soon as it has one real entry, the sample cards disappear.
 
 ## Add a new carousel
 
@@ -23,7 +23,7 @@ The Library section shows your Bioinformatics Starter Pack plus every PDF listed
 
 ### Pages in the Library
 
-You never have to manage pages. The Library shows two rows of cards at a time, 8 on wide screens and 6 on tablets and phones, and adds Prev, page numbers and Next under the cards as soon as there are more. The Starter Pack always comes first, then the entries in the order of `carousels.json`. The filter chips (Carousels, Guides) page the same way. To change how many cards a page holds, edit `perPage` in the library script in `index.html`.
+You never have to manage pages. The Library shows two rows of cards at a time, 8 on wide screens and 6 on tablets and phones, and adds Prev, page numbers and Next under the cards as soon as there are more. Cards follow the order of `carousels.json`. The filter chips (Carousels, Guides) page the same way. To change how many cards a page holds, edit `perPage` in the library script in `index.html`.
 
 ### Page pictures (why the viewer fits phones)
 
@@ -72,6 +72,3 @@ Without `cover` or `headline`, the card falls back to a plain tinted cover with 
 - Check the `file` path matches the PDF's name exactly, including capital letters.
 - Hard-refresh the page (Cmd+Shift+R) in case your browser cached the old list.
 
-## Changing the Starter Pack link
-
-Search `index.html` for `Bioinformatics Starter Pack`. The `url` next to it is the Notion link. Its cover text (kicker and line) is in the `card()` function a few lines below, in the `made({...})` call for the starter.

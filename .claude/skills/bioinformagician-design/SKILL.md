@@ -17,7 +17,7 @@ The page is a guided experiment in six numbered steps. Each section opens with a
 | 1 | `#atlas` | step 1 · cluster | UMAP atlas | Every video is a cell, colored by topic cluster; search and click a cluster |
 | 2 | `#trajectory` | step 2 · order cells in pseudotime | Trajectory + pipeline | Channel eras over time, with QC stats per era |
 | 3 | `#protocols` | step 3 · pick a protocol | Lab protocol | Five learning paths with tickable steps saved in localStorage |
-| notes | `#library` | lab notebook · notes to keep | Shelf of decks | LinkedIn carousels, PDF guides and the Starter Pack |
+| notes | `#library` | lab notebook · notes to keep | Shelf of decks | LinkedIn carousels and PDF guides |
 | 4 | `#reference` | step 4 · annotate the reference | GenBank record | Khushbu's photo beside a GenBank-style profile |
 | 5 | `#interactome` | step 5 · map the interactions | Protein network | Partners, platforms and community |
 | 6 | `#deposit` | step 6 · deposit your results | Data deposit | Join the community: YouTube, Follow me on LinkedIn, other links |
@@ -112,7 +112,7 @@ Always write the brand as **Bioinformagician** (capital B). The handle is **@Bio
 
 ## 7. Library data (`carousels/carousels.json`)
 
-The Library shows the Starter Pack (Notion link) plus whatever `carousels/carousels.json` lists. While the list is empty, sample placeholder cards show. Format:
+The Library shows whatever `carousels/carousels.json` lists. While the list is empty, sample placeholder cards show. Format:
 
 ```json
 [
@@ -122,7 +122,7 @@ The Library shows the Starter Pack (Notion link) plus whatever `carousels/carous
 
 `type` is `carousel` or `guide`; `linkedin` is optional and must start with `https://`; `pages` drives the page dots.
 
-Covers: a card shows `cover` (the carousel's first slide, a 4:5 JPG in `carousels/covers/`) when present. Items without one (the Starter Pack, PDF guides) use the designed cover `.lib-cover.made`, which mirrors the carousel covers: warm paper `#FAF8F4`, a soft circle in the top-right corner (mint `#CDEFE4` or peach `#F6CFB6`), a mono uppercase kicker, a heavy Bricolage headline with one word highlighted (`#FBD3CC` underlay), a gray sub line and the "Bioinfor**magician**." wordmark (magician in `#0B5468`, dot in `#EE6457`). Covers stay light in dark mode, like printed slides. Entries feed it with `kicker`, `headline`, `mark`, `sub`. With neither, cards fall back to a tinted cover (harbor, blush, sage, lilac, sand, aqua in order).
+Covers: a card shows `cover` (the carousel's first slide, a 4:5 JPG in `carousels/covers/`) when present. Items without one (PDF guides) use the designed cover `.lib-cover.made`, which mirrors the carousel covers: warm paper `#FAF8F4`, a soft circle in the top-right corner (mint `#CDEFE4` or peach `#F6CFB6`), a mono uppercase kicker, a heavy Bricolage headline with one word highlighted (`#FBD3CC` underlay), a gray sub line and the "Bioinfor**magician**." wordmark (magician in `#0B5468`, dot in `#EE6457`). Covers stay light in dark mode, like printed slides. Entries feed it with `kicker`, `headline`, `mark`, `sub`. With neither, cards fall back to a tinted cover (harbor, blush, sage, lilac, sand, aqua in order).
 
 ## 8. Copy voice
 
