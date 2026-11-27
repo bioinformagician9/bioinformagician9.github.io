@@ -25,6 +25,14 @@ The Library section shows every PDF listed in `carousels/carousels.json`. While 
 
 You never have to manage pages. The Library shows two rows of cards at a time, 8 on wide screens and 6 on tablets and phones, and adds Prev, page numbers and Next under the cards as soon as there are more. Cards follow the order of `carousels.json`. The filter chips (Carousels, Guides) page the same way. To change how many cards a page holds, edit `perPage` in the library script in `index.html`.
 
+### Searching the Library
+
+The search box next to the filter chips narrows the cards as you type. It looks at each entry's `title`, plus `kicker`, `headline` and `sub` when they're set, and the type (carousel or guide). Every word typed has to appear somewhere; capitals, accents and punctuation don't matter, so `pcr-free` finds "PCR vs PCR-free". Matching words are highlighted in the card titles.
+
+Search works together with the filter chips and the pages: a search always starts on page 1, and the page numbers count only the matches. When nothing matches, the shelf says so and offers **Clear search** (and **Search all types** when a chip is narrowing it). The × button or Esc clears the box, and pressing `/` anywhere on the page jumps to it.
+
+So a new carousel is easy to find, give it a `title` with the words people would search for (the file format, tool or topic).
+
 ### Page pictures (why the viewer fits phones)
 
 The viewer doesn't show the PDF itself. It shows one picture per page from `carousels/pages/<pdf name>/1.jpg, 2.jpg ...`, which fit any screen and can be swiped on a phone. The **Download PDF** button still gives the real PDF.

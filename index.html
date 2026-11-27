@@ -422,7 +422,30 @@ a.gx:hover,div.gx:hover{background:rgba(255,255,255,.08);border-color:color-mix(
 footer{border-top:1px solid var(--line);padding-block:28px 44px;color:var(--ink-3);font-size:13px}
 footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
 /* library: carousels and PDF guides */
-.lib-filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:34px}
+.lib-tools{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px 20px;margin-bottom:34px}
+.lib-filters{display:flex;flex-wrap:wrap;gap:8px}
+.lib-q{flex:0 1 340px;min-width:0;display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:0 6px 0 14px;color:var(--ink-3);transition:border-color .15s ease}
+.lib-q:hover{border-color:color-mix(in srgb,var(--ink) 22%,var(--line))}
+.lib-q:focus-within{outline:2px solid var(--accent);outline-offset:2px;border-color:var(--accent)}
+.lib-q svg{flex:none;width:16px;height:16px}
+.lib-q input{flex:1;min-width:0;border:0;background:transparent;color:var(--ink);font:14px/1.2 var(--font-body);padding:10px 0;outline:none;-webkit-appearance:none;appearance:none}
+.lib-q input::placeholder{color:var(--ink-3);opacity:1}
+.lib-q input::-webkit-search-cancel-button,.lib-q input::-webkit-search-decoration{-webkit-appearance:none;appearance:none;display:none}
+.lib-q .lib-clear{flex:none;width:28px;height:28px;display:grid;place-items:center;border:0;border-radius:50%;background:var(--surface-2);color:var(--ink-2);cursor:pointer;font:600 16px/1 var(--font-body);padding:0}
+.lib-q .lib-clear:hover{background:color-mix(in srgb,var(--ink) 10%,var(--surface-2))}
+.lib-q .lib-clear[hidden]{display:none}
+.lib-q kbd{flex:none;font:11px var(--font-mono);color:var(--ink-3);border:1px solid var(--line);border-radius:6px;padding:1px 6px;margin-right:6px}
+.lib-q.has-q kbd{display:none}
+@media (hover:none),(max-width:600px){.lib-q kbd{display:none}}
+@media (max-width:600px){.lib-q{flex:1 1 100%;order:-1}.lib-q input{font-size:16px}}
+.lib-item .it mark{background:linear-gradient(transparent 55%,color-mix(in srgb,var(--coral) 32%,transparent) 55%);color:inherit;padding:0 .04em}
+.lib-empty{grid-column:1/-1;border:1.5px dashed var(--line);border-radius:var(--r);padding:clamp(28px,5vw,48px) clamp(18px,4vw,40px);text-align:center;display:grid;justify-items:center;gap:6px}
+.lib-empty .hand{font-size:clamp(22px,2.4vw,28px);line-height:1;transform:rotate(-2deg)}
+.lib-empty p{margin:0;color:var(--ink-2);font-size:15px;max-width:44ch;overflow-wrap:anywhere}
+.lib-empty p b{color:var(--ink)}
+.lib-empty .tip{font-size:13px;color:var(--ink-3)}
+.lib-empty .acts{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:12px}
+.vh{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
 .lib-shelf{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(20px,3vw,40px) clamp(16px,2.4vw,32px)}
 @media (max-width:980px){.lib-shelf{grid-template-columns:repeat(3,1fr)}}
 @media (max-width:680px){.lib-shelf{grid-template-columns:repeat(2,1fr)}}
@@ -705,7 +728,17 @@ html,body{overflow-x:clip}
       <h2>Notes you can keep.</h2>
       <p class="lede">LinkedIn carousels and PDF guides in one place. Flip through any of them here, then download the PDF.</p>
     </div>
-    <div class="lib-filters" id="libFilters" role="group" aria-label="Filter the library"></div>
+    <div class="lib-tools">
+      <div class="lib-filters" id="libFilters" role="group" aria-label="Filter the library"></div>
+      <div class="lib-q" role="search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></svg>
+        <label for="libQ" class="vh">Search carousels and guides</label>
+        <input id="libQ" type="search" placeholder="Search carousels and guides" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search">
+        <kbd aria-hidden="true">/</kbd>
+        <button type="button" class="lib-clear" id="libClear" aria-label="Clear search" hidden>×</button>
+      </div>
+    </div>
+    <p class="vh" id="libStatus" aria-live="polite"></p>
     <div class="lib-shelf" id="libShelf"></div>
     <nav class="lib-pager" id="libPager" aria-label="Library pages" hidden></nav>
     <p class="lib-note">Dashed covers are placeholders. Each one becomes a real carousel or guide once its PDF is added.</p>
@@ -1333,6 +1366,31 @@ document.querySelectorAll("[data-copy]").forEach(b=>b.addEventListener("click",(
   const fl=$("#libFilters");
   fl.innerHTML=Object.entries(TYPES).map(([k,l])=>`<button class="chip" type="button" data-f="${k}" aria-pressed="${k==="all"}">${l}</button>`).join("");
   fl.addEventListener("click",e=>{const b=e.target.closest("[data-f]");if(!b)return;filter=b.dataset.f;pg=0;fl.querySelectorAll("[data-f]").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));render()});
+  /* search: every word typed must appear in the title, cover text or type; case, accents and punctuation are ignored */
+  let q="",words=[];
+  const norm=t=>String(t||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z0-9]+/g," ").trim();
+  const hay=it=>norm([it.title,it.headline,it.kicker,it.sub,TY[it.type],it.type].join(" "));
+  const hit=it=>!words.length||words.every(w=>hay(it).includes(w));
+  const qi=$("#libQ"),qc=$("#libClear"),qb=qi.closest(".lib-q");
+  function setQ(v){q=v;words=norm(v).split(" ").filter(Boolean);qc.hidden=!v;qb.classList.toggle("has-q",!!v);pg=0;render()}
+  qi.addEventListener("input",()=>setQ(qi.value));
+  qi.addEventListener("keydown",e=>{if(e.key==="Escape"&&qi.value){e.preventDefault();e.stopPropagation();qi.value="";setQ("")}else if(e.key==="Enter"){e.preventDefault();qi.blur()}});
+  qc.addEventListener("click",()=>{qi.value="";setQ("");qi.focus()});
+  addEventListener("keydown",e=>{if(e.key!=="/"||e.metaKey||e.ctrlKey||e.altKey)return;const a=document.activeElement;
+    if(a&&(/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName)||a.isContentEditable)||document.querySelector("dialog[open]"))return;
+    e.preventDefault();qi.focus({preventScroll:true});$("#library").scrollIntoView({block:"start",behavior:"auto"})});
+  /* highlight the typed words in a card's title */
+  function mark(t){if(!words.length)return esc(t);const re=new RegExp("("+[...words].sort((a,b)=>b.length-a.length).join("|")+")","gi");
+    return String(t).split(re).map((x,k)=>k%2?`<mark>${esc(x)}</mark>`:esc(x)).join("")}
+  function empty(){const noun=filter==="all"?"carousels or guides":TYPES[filter].toLowerCase(),
+      other=filter!=="all"&&words.length?LIB.filter(hit).length:0;
+    if(!words.length)return `<div class="lib-empty"><span class="hand">nothing here yet</span><p>No ${noun} on the shelf yet.</p></div>`;
+    return `<div class="lib-empty"><span class="hand">nothing on this shelf</span><p>No ${noun} match “<b>${esc(q.trim())}</b>”.</p>
+      <p class="tip">Try one word, like a file format, a tool or a topic.</p>
+      <div class="acts"><button class="chip" type="button" data-act="clear">Clear search</button>${other?`<button class="chip" type="button" data-act="all">Search all types (${other})</button>`:""}</div></div>`}
+  $("#libShelf").addEventListener("click",e=>{const b=e.target.closest("[data-act]");if(!b)return;
+    if(b.dataset.act==="clear"){qi.value="";setQ("");qi.focus()}
+    else{filter="all";pg=0;fl.querySelectorAll("[data-f]").forEach(x=>x.setAttribute("aria-pressed",String(x.dataset.f==="all")));render()}});
   /* paging: two rows of cards per page (8 on wide screens, 6 on tablets and phones), so new carousels can keep coming */
   let pg=0;
   const perPage=()=>innerWidth>980?8:6;
@@ -1347,14 +1405,15 @@ document.querySelectorAll("[data-copy]").forEach(b=>b.addEventListener("click",(
       :it.headline?made({kicker:it.kicker,headline:it.headline,mark:it.mark,sub:it.sub,right:`${it.pages} pages →`,blob:"#F6CFB6"})
       :`<div class="lib-cover${it.ph?" ph":""}" style="--t:var(${it.tint})"><span class="ty"><span>${it.type==="carousel"?"Carousel":"Guide"}</span><span>1/${it.pages}</span></span><span class="ct">${esc(it.title)}</span><span class="ft"><span>@Bioinformagician</span><span class="dot"></span></span></div>`;
     return `<button class="lib-item" type="button" data-i="${i}"><div class="lib-deck">${cover}</div>
-      <div class="it">${esc(it.title)}</div><div class="im"><span>${TY[it.type]} · ${it.pages} pages</span>${it.ph?`<span class="lib-ph">placeholder</span>`:""}</div></button>`}
+      <div class="it">${mark(it.title)}</div><div class="im"><span>${TY[it.type]} · ${it.pages} pages</span>${it.ph?`<span class="lib-ph">placeholder</span>`:""}</div></button>`}
   /* a designed cover in the style of the carousel covers: kicker, big headline with one highlighted word, line, wordmark */
   function made(o){let hl=esc(o.headline||"");const m=esc(o.mark||"");if(m&&hl.includes(m))hl=hl.replace(m,`<mark>${m}</mark>`);
     return `<div class="lib-cover made" style="--blob:${o.blob}"><span class="ky">${esc(o.kicker||"")}</span><span class="hl">${hl}</span>${o.sub?`<span class="sb">${esc(o.sub)}</span>`:""}<span class="ft"><span class="wmk">Bioinfor<b>magician</b><i>.</i></span><span>${esc(o.right||"")}</span></span></div>`}
   function render(){
-    const shown=LIB.map((it,i)=>[it,i]).filter(([it])=>filter==="all"||filter===it.type),per=perPage(),n=Math.max(1,Math.ceil(shown.length/per));
+    const shown=LIB.map((it,i)=>[it,i]).filter(([it])=>(filter==="all"||filter===it.type)&&hit(it)),per=perPage(),n=Math.max(1,Math.ceil(shown.length/per));
     lastPer=per;pg=Math.min(Math.max(0,pg),n-1);
-    $("#libShelf").innerHTML=shown.slice(pg*per,pg*per+per).map(([it,i])=>card(it,i)).join("");
+    $("#libShelf").innerHTML=shown.length?shown.slice(pg*per,pg*per+per).map(([it,i])=>card(it,i)).join(""):empty();
+    $("#libStatus").textContent=words.length?(shown.length?`${shown.length} ${shown.length===1?"match":"matches"} for ${q.trim()}`:`No matches for ${q.trim()}`):"";
     const nav=$("#libPager");nav.hidden=n<2;if(n<2){nav.innerHTML="";return}
     const a=pg*per+1,b=Math.min(shown.length,a+per-1);
     nav.innerHTML=`<span class="pg-count">${a}–${b} of ${shown.length}</span>
